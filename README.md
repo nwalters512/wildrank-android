@@ -1,4 +1,4 @@
-The Blue Alliance - Android App
+WildRank - Android App
 ===============================
 
 [![Build Status](https://travis-ci.org/nwalters512/wildrank-android.png?branch=master)](https://travis-ci.org/nwalters512/wildrank-android)

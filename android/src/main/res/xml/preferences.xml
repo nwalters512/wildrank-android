@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="red_1"
+        android:dialogTitle="@string/preference_configured_team_dialog_title"
+        android:entries="@array/preference_configured_team_entries"
+        android:entryValues="@array/preference_configured_team_values"
+        android:key="configuredTeam"
+        android:summary="@string/preference_configured_team_summary"
+        android:title="@string/preference_configured_team_title" />
+    
+    <ListPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/preference_pit_group_dialog_title"
+        android:key="pitGroup"
+        android:summary="@string/preference_pit_group_summary"
+        android:title="@string/preference_pit_group_title" />
+
+    <EditTextPreference
+        android:defaultValue="Joshua Gustafson"
+        android:dialogTitle="@string/preference_scouter_name_dialog_title"
+        android:key="scouterName"
+        android:summary="@string/preference_scouter_name_summary"
+        android:title="@string/preference_scouter_name_title" />
+
+    <SwitchPreference
+        android:key="superUser"
+        android:defaultValue="false"
+        android:summary="@string/preference_superuser_summary"
+        android:title="@string/preference_superuser_title" />
+    
+    <Preference
+        android:key="importPickList"
+        android:title="@string/preference_importpicklist_title"
+        android:summary="@string/preference_importpicklist_summary" />
+    
+    <Preference
+        android:key="exportPickList"
+        android:title="@string/preference_exportpicklist_title"
+        android:summary="@string/preference_exportpicklist_summary" />
+
+</PreferenceScreen>

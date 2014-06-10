@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WildRank</string>
+
+    <!-- Menus -->
+    <string name="action_settings">Settings</string>
+    <string name="action_synchronize_with_flash_drive">Synchronize with Flash Drive</string>
+    <string name="action_take_picture">Take picture</string>
+
+    <!-- Match scouting strings -->
+    <string name="match_number_label">Match</string>
+    <string name="team_number_label">Team</string>
+    <string name="alliance_color_label">Alliance</string>
+
+    <!-- Pit scouting strings -->
+    <string name="team_name_label">Name</string>
+
+    <!-- Button text -->
+    <string name="button_scout_match">Begin Scouting Match</string>
+    <string name="button_scout_team">Begin Scouting Team</string>
+    <string name="button_rescout_match">Rescout This Match</string>
+    <string name="button_rescout_team">Rescout This Team</string>
+    <string name="button_take_notes">Take Notes</string>
+    <string name="button_finish">Finish</string>
+
+    <!-- Activity strings -->
+    <string name="activity_launch">WildRank</string>
+    <string name="activity_scout_match">Match Scouting</string>
+    <string name="activity_settings">Settings</string>
+    <string name="activity_scout_pit">Pit Scouting</string>
+    <string name="activity_notes">Notes</string>
+    <string name="activity_setup">Setup</string>
+
+    <!-- General strings -->
+    <string name="alliance_color_red">Red</string>
+    <string name="alliance_color_blue">Blue</string>
+
+    <!-- Preferences -->
+    <string name="preference_configured_team_title">Set team</string>
+    <string name="preference_configured_team_summary">Set which team this tablet will be scouting for</string>
+    <string name="preference_configured_team_dialog_title">Select a team</string>
+
+    <string-array name="preference_configured_team_entries">
+        <item>Red 1</item>
+        <item>Red 2</item>
+        <item>Red 3</item>
+        <item>Blue 1</item>
+        <item>Blue 2</item>
+        <item>Blue 3</item>
+    </string-array>
+    <string-array name="preference_configured_team_values">
+        <item>red_1</item>
+        <item>red_2</item>
+        <item>red_3</item>
+        <item>blue_1</item>
+        <item>blue_2</item>
+        <item>blue_3</item>
+    </string-array>
+    
+    <string name="preference_pit_group_title">Set pit group</string>
+    <string name="preference_pit_group_summary">Set which group of teams this tablet will scout in the pits</string>
+    <string name="preference_pit_group_dialog_title">Select a group</string>
+
+    <string name="preference_scouter_name_title">Set scouter name</string>
+    <string name="preference_scouter_name_summary">Set the name that will be recorded with this scouting data</string>
+    <string name="preference_scouter_name_dialog_title">Enter a name</string>
+    
+    <string name="preference_superuser_title">Super User Mode</string>
+    <string name="preference_superuser_summary">Super User Mode disables all password protection throughout the app</string>
+    
+    <string name="preference_importpicklist_title">Import pick list</string>
+    <string name="preference_importpicklist_summary">Imports pick list from the flash drive. Flash drive must be connected and file must be in /picklist/picklist.json</string>
+    
+    <string name="preference_exportpicklist_title">Export pick list</string>
+    <string name="preference_exportpicklist_summary">Exports pick list to the flash drive. Flash drive must be connected; file will be in /picklist/picklist.json</string>
+
+    <!-- Spinner Strings -->
+    <string-array name="frc_actuators">
+        <item>None</item>
+        <item>CIM</item>
+        <item>BaneBot</item>
+        <item>AndyMark</item>
+        <item>Mini-CIM</item>
+        <item>Window Motor</item>
+        <item>VEX Motor</item>
+        <item>Bag Motor</item>
+        <item>Servo</item>
+        <item>Pneumatics</item>
+    </string-array>
+    <string-array name="frc_features">
+        <item></item>
+        <item>Shooter</item>
+        <item>Catcher</item>
+        <item>Accumulator</item>
+    </string-array>
+    <string-array name="frc_drivetrains">
+        <item></item>
+        <item>2-wheel drive</item>
+        <item>4-wheel drive</item>
+        <item>6-wheel drive</item>
+        <item>8-wheel drive</item>
+        <item>Swerve</item>
+        <item>Omniwheel</item>
+        <item>Butterfly</item>
+        <item>Mecanum</item>
+        <item>Holonomic</item>
+        <item>Caterpillar</item>
+    </string-array>
+    <string-array name="frc_shooters">
+        <item>None</item>
+        <item>Catapult</item>
+        <item>Linear Punch</item>
+        <item>Linear Flywheels</item>
+        <item>Kicker</item>
+    </string-array>
+    <string-array name="frc_ranking">
+        <item></item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- Navigation Drawer -->
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="button_default">#dbdbdb</color>
+    <color name="button_pressed">#c5c5c5</color>
+    <drawable name="button_default">#dbdbdb</drawable>
+    <drawable name="button_pressed">#c5c5c5</drawable>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0000ff</color>
+    <color name="gray">#ddd</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="light_gray">#e5e5e5</color>
+    <color name="dark_gray">#bfbfbf</color>
+    
+    <color name="pick_list_tier_1">#00ff00</color>
+    <color name="pick_list_tier_2">#3366ff</color>
+    <color name="pick_list_tier_3">#ffff00</color>
+    <color name="pick_list_tier_4">#ff9900</color>
+    <color name="pick_list_tier_5">#c0c0c0</color>
+</resources>

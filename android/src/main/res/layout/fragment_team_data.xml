@@ -1,0 +1,149 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/team_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:id="@+id/data_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/general_header"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="General"
+                android:textSize="20sp" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/average_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="6*AVERAGE(autonomous-scored_low) + 11*AVERAGE(autonomous-scored_hot_low) + 15*AVERAGE(autonomous-scored_high) + 20*AVERAGE(autonomous-scored_hot_high) + 5*AVERAGE(autonomous-move) + 1*AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high) + 10*AVERAGE(teleop-truss) + 10*AVERAGE(teleop-truss_catch_count)"
+                custom:label="Average Points / Match" />
+            
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/average_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="6*AVERAGE(autonomous-scored_low) + 11*AVERAGE(autonomous-scored_hot_low) + 15*AVERAGE(autonomous-scored_high) + 20*AVERAGE(autonomous-scored_hot_high) + 5*AVERAGE(autonomous-move) + 1*AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high) + 10*AVERAGE(teleop-truss) + 10*AVERAGE(teleop-truss_catch_count) - 20*AVERAGE(post_match-foul_general) - 50*AVERAGE(post_match-foul_technical)"
+                custom:label="Average Points / Match (With Fouls)" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/average_teleop_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="6*AVERAGE(autonomous-scored_low) + 11*AVERAGE(autonomous-scored_hot_low) + 15*AVERAGE(autonomous-scored_high) + 20*AVERAGE(autonomous-scored_hot_high) + 5*AVERAGE(autonomous-move)"
+                custom:label="Average Auto Points / Match" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/average_auto_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="1*AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high) + 10*AVERAGE(teleop-truss) + 10*AVERAGE(teleop-truss_catch_count)"
+                custom:label="Average Teleop Points / Match" />
+
+            <TextView
+                android:id="@+id/auto_header"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="Autonomous"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/auto_scored_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(autonomous-scored_high) + AVERAGE(autonomous-scored_hot_high)"
+                custom:label="Average Scored High" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/auto_scored_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(autonomous-scored_low) + AVERAGE(autonomous-scored_hot_low)"
+                custom:label="Average Scored Low" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/auto_missed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(autonomous-missed)"
+                custom:label="Average Missed" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/percent_made"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="(AVERAGE(autonomous-scored_low) + AVERAGE(autonomous-scored_hot_low) + AVERAGE(autonomous-scored_high) + AVERAGE(autonomous-scored_hot_high))/(AVERAGE(autonomous-scored_low) + AVERAGE(autonomous-scored_hot_low) + AVERAGE(autonomous-scored_high) + AVERAGE(autonomous-scored_hot_high) + AVERAGE(autonomous-missed))"
+                custom:format="percentage"
+                custom:label="Average % Made" />
+
+            <TextView
+                android:id="@+id/teleop_header"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="Teleop"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/scored_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(teleop-scored_high)"
+                custom:label="Average Scored High" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/scored_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(teleop-scored_low)"
+                custom:label="Average Scored Low" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/missed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(teleop-missed)"
+                custom:label="Average Missed" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/percent_made"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="(AVERAGE(teleop-scored_low) + AVERAGE(teleop-scored_high))/(AVERAGE(teleop-scored_low) + AVERAGE(teleop-scored_high) + AVERAGE(teleop-missed))"
+                custom:format="percentage"
+                custom:label="Average % Made" />
+
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/missed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(teleop-assist_count)"
+                custom:label="Average Assists" />
+            
+            <org.wildstang.wildrank.android.customviews.DataView
+                android:id="@+id/truss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:expression="AVERAGE(teleop-truss)"
+                custom:label="Average Truss Throws" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

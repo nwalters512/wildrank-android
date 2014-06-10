@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray" >
+
+    <!-- Main info -->
+
+    <LinearLayout
+        android:id="@+id/main_info"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/general_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dimensions"
+            android:textSize="30sp" />
+        
+        <org.wildstang.wildrank.android.customviews.SerializableNumberView
+            android:id="@+id/robot_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusForward="@+id/robot_length"
+            custom:key="robot_weight"
+            custom:label="Weight (lbs)" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableNumberView
+            android:id="@id/robot_length"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusForward="@+id/robot_width"
+            custom:key="robot_length"
+            custom:label="Length (in)"
+            android:nextFocusDown="@+id/robot_width" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableNumberView
+            android:id="@id/robot_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusForward="@+id/robot_height"
+            custom:key="robot_width"
+            custom:label="Width (in)" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableNumberView
+            android:id="@+id/robot_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="robot_height"
+            custom:label="Height (in)" />
+
+        
+    </LinearLayout>
+
+    <!-- Miscelaneous Features -->
+
+    <LinearLayout
+        android:id="@+id/features"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/finish"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/main_info"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/core_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Robot Features"
+            android:textSize="30sp" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/catcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="catcher"
+            custom:label="Catcher?" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/accumulator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="accumulator"
+            custom:label="Accumulator?" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/receive_from_hp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="receive_from_hp"
+            custom:label="Receive from HP?" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableSpinnerView
+            android:id="@+id/drivetrain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:editable="true"
+            custom:key="drivetrain"
+            custom:label="Drivetrain"
+            custom:values="@array/frc_drivetrains" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableSpinnerView
+            android:id="@+id/shooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="None"
+            custom:editable="true"
+            custom:key="shooter"
+            custom:label="Shooter"
+            custom:values="@array/frc_shooters" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notes"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/finish"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/team_picture"
+        android:layout_toRightOf="@id/features"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/notes_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textSize="30sp" />
+
+        <FrameLayout
+            android:id="@+id/notes_container"
+            style="@style/ScoutingWidget"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/team_picture"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="Team picture"
+        android:scaleType="centerCrop" />
+
+    <Button
+        android:id="@id/finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_finish" />
+
+</RelativeLayout>

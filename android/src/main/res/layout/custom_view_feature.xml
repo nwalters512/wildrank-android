@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/button_default" >
+        <ImageButton
+            android:id="@+id/delete_feature"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_menu_delete" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableSpinnerView
+            android:id="@+id/feature_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/delete_feature"
+            custom:editable="true"
+            custom:key="feature"
+            custom:label="Name"
+            custom:values="@array/frc_features" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableSpinnerView
+            android:id="@+id/feature_actuator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/delete_feature"
+            android:layout_below="@id/feature_name"
+            custom:editable="true"
+            custom:key="actuator"
+            custom:label="Actuator"
+            custom:values="@array/frc_actuators"
+            custom:defaultValue="None" />
+    </RelativeLayout>
+
+</merge>

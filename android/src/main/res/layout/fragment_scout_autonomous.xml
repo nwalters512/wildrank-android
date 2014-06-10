@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray" >
+
+    <!-- General -->
+
+    <LinearLayout
+        android:id="@+id/general"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/general_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:textSize="30sp" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/autonomous_goalize_zone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-goalie_zone"
+            custom:label="Started in goalie zone" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/autonomous_started_with_ball"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-ball"
+            custom:label="Started with ball" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCheckboxView
+            android:id="@+id/autonomous_move"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-move"
+            custom:label="Moved" />
+    </LinearLayout>
+
+    <!-- Scoring -->
+
+    <LinearLayout
+        android:id="@+id/scoring"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/general"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/scoring_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scoring"
+            android:textSize="30sp" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCounterView
+            android:id="@+id/autonomous_hot_goal_high_scored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-scored_hot_high"
+            custom:label="Hot Goal High" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCounterView
+            android:id="@+id/autonomous_goal_high_scored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-scored_high"
+            custom:label="Regular High" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCounterView
+            android:id="@+id/autonomous_hot_goal_low_scored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-scored_hot_low"
+            custom:label="Hot Goal Low" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCounterView
+            android:id="@+id/autonomous_goal_low_scored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-scored_low"
+            custom:label="Regular Low" />
+
+        <org.wildstang.wildrank.android.customviews.SerializableCounterView
+            android:id="@+id/autonomous_goal_missed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:key="autonomous-missed"
+            custom:label="Missed" />
+    </LinearLayout>
+
+</RelativeLayout>

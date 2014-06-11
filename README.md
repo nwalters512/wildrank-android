@@ -36,7 +36,8 @@ To add a field to a scouting page, simply include one of the ```JSONSerializable
 
 If the functionality you want isn't provided by any of the included widgets, you can make your own view that implements ```IJSONSerializable```. See any of the included views for an example of how such a class should behave.
 
-Each defined view in the XML layout files should provide a ```key``` and ```label``` attribute. The lable is used (obviously) as a lable for the view. The key is used to tell the framework how to store the value when the match results are saved. It should consist of a hyphenated string of levels in a JSON object hierarchy. For instance, a view with a key of ```autonomous-hot_high``` would be saved as the following JSON object:
+Each defined view in the XML layout files should provide a ```key``` and ```label``` attribute. The label is used (obviously) as a lable for the view. The key is used to tell the framework how to store the value when the match results are saved. It should consist of a hyphenated string of levels in a JSON object hierarchy. For instance, a view with a key of ```autonomous-hot_high``` would be saved as the following JSON object:
+
 ```json
 {
     "autonomous": {
@@ -45,9 +46,8 @@ Each defined view in the XML layout files should provide a ```key``` and ```labe
 }
 ```
 
-
-
 An example layout file is included below. It contains two columns. The first is titled "General" and has a single checkbox for recording if a robot moves. The second is titled "Scoring" and has a counter that counts how many balls were scored in the hot high goal.
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -111,6 +111,7 @@ An example layout file is included below. It contains two columns. The first is 
 ```
 
 A possible output, given this layout, for match 32 of team 111 would look like this:
+
 ```
 {
     "team_numner": 111,
@@ -124,6 +125,7 @@ A possible output, given this layout, for match 32 of team 111 would look like t
     }
 }
 ```
+
 #### Configuring pit scouting
 Pt scouting is handled very similarly to match scouting. Simply incude any number of ```JSONSerializableView```s in the layout, providing a ```key``` and ```label``` for each one. All changes for pit scouting should be made in ```fragment_scout_pit.xml```
 
@@ -131,6 +133,7 @@ Pt scouting is handled very similarly to match scouting. Simply incude any numbe
 The Team Summary mode provides the ability to show a summary of the pit data that was collected for the selected team. This is done via ```TemplatedTextView```s. A ```TamplatedTextView``` will allow you to dynamically substitute in loaded data. It will use any text eclosed by double braces ```{{...}}``` as a key to get a value from a JSON file. It works similary to the ```key``` from pit/match scouting. The best way to explain this is to provide an example.
 
 Say I have the following pit data JSON object and I want to display the ```robot_weight``` field from it:
+
 ```json
 {
     "team_number": 111,
@@ -140,6 +143,7 @@ Say I have the following pit data JSON object and I want to display the ```robot
     }
 }
 ```
+
 I would create a ```TemplatedTextView``` in my layout and add a ```text``` attribute to the view (note that this should be in the project xml namespace, not the android one; for instance, you might use ```custom:text``` instead of ```android:text```). The ```text``` attribute should consist of a hyphenated string of levels in a JSON object hierarchy. So, to display the robot weight, I would add the attribute ```custom:text="&lt;b&gt;Weight:&lt;/b&gt; {{scoring-robot_weight}} lbs"```. This would display as
 
 **Weight**: 120 lbs
@@ -150,6 +154,7 @@ Note that the ```text``` attribute is parsed as HTML, so you can use basic HTML 
 Team Summary mode also provides basic data analysis, which is handled similarly to the pit summary. It uses ```DataView``` views with an ```expression``` attribute. It provides support for addition, subtraction, multiplication, and division, as well as an average function that will evaluate to the average of the specified field for all matches for the given team.
 
 For instance, take the following:
+
 ```xml
 custom:expression="AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high)"
 ```

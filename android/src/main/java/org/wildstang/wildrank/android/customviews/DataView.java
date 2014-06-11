@@ -50,7 +50,7 @@ public class DataView extends RelativeLayout implements IDataView {
     @Override
     public void populateFromData(List<JSONObject> data) {
         // First, iterate through the expression and replace all functions
-        // such as AVERAGE and SUM with their evaluated outputs
+        // such as AVERAGE with their evaluated outputs
         Log.d("populateFromData", "expression: " + expression);
         if (data.size() != 0) {
             while (expression.contains("AVERAGE")) {

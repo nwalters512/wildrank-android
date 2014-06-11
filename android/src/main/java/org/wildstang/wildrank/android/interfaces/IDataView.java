@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IDataView {
 
-	public void readData(List<JSONObject> data);
+    public void populateFromData(List<JSONObject> data);
 
 }

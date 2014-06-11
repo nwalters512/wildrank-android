@@ -12,26 +12,26 @@ import java.io.IOException;
  */
 public class TaskSynchronizeWithFlashDrive extends GenericTaskWithContext {
 
-	public TaskSynchronizeWithFlashDrive() {
-		super(TaskType.TASK_SYNCHRONIZE_WITH_FLASH_DRIVE);
-	}
+    public TaskSynchronizeWithFlashDrive() {
+        super(TaskType.TASK_SYNCHRONIZE_WITH_FLASH_DRIVE);
+    }
 
-	@Override
-	protected Void doInBackground(Void... params) {
-		ProgressUpdateInfo update = new ProgressUpdateInfo();
-		update.state = ProgressUpdaterState.IN_PROGRESS;
-		update.message = "Synchronizing internal storage with flash drive";
-		publishProgress(update);
-		try {
-			DataManager.syncWithFlashDrive(context);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    @Override
+    protected Void doInBackground(Void... params) {
+        ProgressUpdateInfo update = new ProgressUpdateInfo();
+        update.state = ProgressUpdaterState.IN_PROGRESS;
+        update.message = "Synchronizing internal storage with flash drive";
+        publishProgress(update);
+        try {
+            DataManager.syncWithFlashDrive(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		update.state = ProgressUpdaterState.COMPLETE;
-		publishProgress(update);
+        update.state = ProgressUpdaterState.COMPLETE;
+        publishProgress(update);
 
-		return null;
-	}
+        return null;
+    }
 
 }

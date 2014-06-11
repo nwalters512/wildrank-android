@@ -25,138 +25,134 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragNDropAdapter {
-	int mPosition[];
-	int mHandler;
-	int mMoveToTop;
-	int mMoveToBottom;
-	ListViewButtonListener buttonListener;
+    int mPosition[];
+    int mHandler;
+    int mMoveToTop;
+    int mMoveToBottom;
+    ListViewButtonListener buttonListener;
 
-	public DragNDropCursorAdapter(Context context, int layout, Cursor cursor, String[] from, int[] to, int handler, int moveToTop, int moveToBottom) {
-		super(context, layout, cursor, from, to, 0);
+    public DragNDropCursorAdapter(Context context, int layout, Cursor cursor, String[] from, int[] to, int handler, int moveToTop, int moveToBottom) {
+        super(context, layout, cursor, from, to, 0);
 
-		mHandler = handler;
-		mMoveToTop = moveToTop;
-		mMoveToBottom = moveToBottom;
-		setup();
-	}
+        mHandler = handler;
+        mMoveToTop = moveToTop;
+        mMoveToBottom = moveToBottom;
+        setup();
+    }
 
-	@Override
-	public Cursor swapCursor(Cursor c) {
-		Cursor cursor = super.swapCursor(c);
+    @Override
+    public Cursor swapCursor(Cursor c) {
+        Cursor cursor = super.swapCursor(c);
 
-		mPosition = null;
-		setup();
+        mPosition = null;
+        setup();
 
-		return cursor;
-	}
+        return cursor;
+    }
 
-	private void setup() {
-		Cursor c = getCursor();
+    private void setup() {
+        Cursor c = getCursor();
 
-		if (c == null || !c.moveToFirst())
-			return;
+        if (c == null || !c.moveToFirst())
+            return;
 
-		mPosition = new int[c.getCount()];
+        mPosition = new int[c.getCount()];
 
-		for (int i = 0; i < mPosition.length; ++i)
-			mPosition[i] = i;
-	}
+        for (int i = 0; i < mPosition.length; ++i)
+            mPosition[i] = i;
+    }
 
-	@Override
-	public View getDropDownView(int position, View view, ViewGroup group) {
-		return super.getDropDownView(mPosition[position], view, group);
-	}
+    @Override
+    public View getDropDownView(int position, View view, ViewGroup group) {
+        return super.getDropDownView(mPosition[position], view, group);
+    }
 
-	@Override
-	public Object getItem(int position) {
-		return super.getItem(mPosition[position]);
-	}
+    @Override
+    public Object getItem(int position) {
+        return super.getItem(mPosition[position]);
+    }
 
-	@Override
-	public int getItemViewType(int position) {
-		return super.getItemViewType(mPosition[position]);
-	}
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(mPosition[position]);
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return super.getItemId(mPosition[position]);
-	}
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(mPosition[position]);
+    }
 
-	@Override
-	public View getView(final int position, View view, ViewGroup group) {
-		View v = super.getView(mPosition[position], view, group);
-		Button top = ((Button) v.findViewById(mMoveToTop));
-		if (top != null) {
-			top.setOnClickListener(new OnClickListener() {
+    @Override
+    public View getView(final int position, View view, ViewGroup group) {
+        View v = super.getView(mPosition[position], view, group);
+        Button top = ((Button) v.findViewById(mMoveToTop));
+        if (top != null) {
+            top.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					if (buttonListener != null) {
-						buttonListener.onButtonClick(v.getId(), position);
-					}
-				}
-			});
-		}
-		
-		Button bottom = ((Button) v.findViewById(mMoveToBottom));
-		if (bottom != null) {
-			bottom.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (buttonListener != null) {
+                        buttonListener.onButtonClick(v.getId(), position);
+                    }
+                }
+            });
+        }
 
-				@Override
-				public void onClick(View v) {
-					if (buttonListener != null) {
-						buttonListener.onButtonClick(v.getId(), position);
-					}
-				}
-			});
-		}
-		return v;
-	}
+        Button bottom = ((Button) v.findViewById(mMoveToBottom));
+        if (bottom != null) {
+            bottom.setOnClickListener(new OnClickListener() {
 
-	@Override
-	public boolean isEnabled(int position) {
-		return super.isEnabled(mPosition[position]);
-	}
+                @Override
+                public void onClick(View v) {
+                    if (buttonListener != null) {
+                        buttonListener.onButtonClick(v.getId(), position);
+                    }
+                }
+            });
+        }
+        return v;
+    }
 
-	@Override
-	public void onItemDrag(DragNDropListView parent, View view, int position, long id) {
+    @Override
+    public boolean isEnabled(int position) {
+        return super.isEnabled(mPosition[position]);
+    }
 
-	}
+    @Override
+    public void onItemDrag(DragNDropListView parent, View view, int position, long id) {
 
-	@Override
-	public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
-		int position = mPosition[startPosition];
+    }
 
-		if (startPosition < endPosition) {
-			for (int i = startPosition; i < endPosition; ++i) {
-				mPosition[i] = mPosition[i + 1];
-			}
-		} else if (endPosition < startPosition) {
-			for (int i = startPosition; i > endPosition; --i) {
-				mPosition[i] = mPosition[i - 1];
-			}
-		}
-		mPosition[endPosition] = position;
-	}
+    @Override
+    public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
+        int position = mPosition[startPosition];
 
-	@Override
-	public int getDragHandler() {
-		return mHandler;
-	}
+        if (startPosition < endPosition) {
+            System.arraycopy(mPosition, startPosition + 1, mPosition, startPosition, endPosition - startPosition);
+        } else if (endPosition < startPosition) {
+            System.arraycopy(mPosition, endPosition, mPosition, endPosition + 1, startPosition - endPosition);
+        }
+        mPosition[endPosition] = position;
+    }
 
-	@Override
-	public int getMoveToTopButton() {
-		return mMoveToTop;
-	}
+    @Override
+    public int getDragHandler() {
+        return mHandler;
+    }
 
-	@Override
-	public int getMoveToButtomButton() {
-		return mMoveToBottom;
-	}
+    @Override
+    public int getMoveToTopButton() {
+        return mMoveToTop;
+    }
 
-	@Override
-	public void setListItemButtonClickListener(ListViewButtonListener listener) {
-		this.buttonListener = listener;
-	}
+    @Override
+    public int getMoveToButtomButton() {
+        return mMoveToBottom;
+    }
+
+    @Override
+    public void setListItemButtonClickListener(ListViewButtonListener listener) {
+        this.buttonListener = listener;
+    }
 
 }

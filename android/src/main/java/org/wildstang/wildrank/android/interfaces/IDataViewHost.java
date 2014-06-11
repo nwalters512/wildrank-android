@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IDataViewHost {
 
-	public void setData(List<JSONObject> data);
+    public void setData(List<JSONObject> data);
 
 }

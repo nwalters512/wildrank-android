@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Scouted by:&lt;/b> {{scouter_id}}"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Weight:&lt;/b> {{scoring-robot_weight}} lbs"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Dimensions (l*w*h):&lt;/b> {{scoring-robot_length}} x {{scoring-robot_width}} x {{scoring-robot_height}}"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Drivetrain:&lt;/b> {{scoring-drivetrain}}"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Shooter:&lt;/b> {{scoring-shooter}}"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Catcher:&lt;/b> {{scoring-catcher}}"
+        custom:trueString="yes"
+        custom:falseString="no"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Accumulator:&lt;/b> {{scoring-accumulator}}"
+        custom:trueString="yes"
+        custom:falseString="no"
+        android:textSize="20sp"/>
+
+    <org.wildstang.wildrank.android.customviews.TemplatedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:text="&lt;b>Receive from HP:&lt;/b> {{scoring-receive_from_hp}}"
+        custom:trueString="yes"
+        custom:falseString="no"
+        android:textSize="20sp"/>
+
+</LinearLayout>

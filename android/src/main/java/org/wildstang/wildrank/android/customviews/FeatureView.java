@@ -9,52 +9,52 @@ import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import org.wildstang.wildrank.R;
+import org.wildstang.wildrank.android.R;
 
 public class FeatureView extends LinearLayout implements OnClickListener {
 
-	SerializableSpinnerView featureName;
-	SerializableSpinnerView featureActuator;
-	ImageButton deleteButton;
+    SerializableSpinnerView featureName;
+    SerializableSpinnerView featureActuator;
+    ImageButton deleteButton;
 
-	public FeatureView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+    public FeatureView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-		LayoutInflater inflater = LayoutInflater.from(context);
-		inflater.inflate(R.layout.custom_view_feature, this, true);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(R.layout.custom_view_feature, this, true);
 
-		featureName = (SerializableSpinnerView) findViewById(R.id.feature_name);
-		featureActuator = (SerializableSpinnerView) findViewById(R.id.feature_actuator);
+        featureName = (SerializableSpinnerView) findViewById(R.id.feature_name);
+        featureActuator = (SerializableSpinnerView) findViewById(R.id.feature_actuator);
 
-		deleteButton = ((ImageButton) findViewById(R.id.delete_feature));
-		deleteButton.setOnClickListener(this);
-	}
+        deleteButton = ((ImageButton) findViewById(R.id.delete_feature));
+        deleteButton.setOnClickListener(this);
+    }
 
-	public String getFeatureName() {
-		return featureName.getSelectedItem();
-	}
+    public String getFeatureName() {
+        return featureName.getSelectedItem();
+    }
 
-	public void setFeatureName(String name) {
-		featureName.setSelectionBasedOnText(name);
-	}
+    public void setFeatureName(String name) {
+        featureName.setSelectionBasedOnText(name);
+    }
 
-	public String getActuator() {
-		return featureActuator.getSelectedItem();
-	}
+    public String getActuator() {
+        return featureActuator.getSelectedItem();
+    }
 
-	public void setActuator(String actuator) {
-		featureActuator.setSelectionBasedOnText(actuator);
-	}
+    public void setActuator(String actuator) {
+        featureActuator.setSelectionBasedOnText(actuator);
+    }
 
-	@Override
-	public void onClick(View v) {
-		if (v == deleteButton) {
-			ViewParent parentList = getParent();
-			while (!(parentList instanceof SerializableFeaturesListView)) {
-				parentList = parentList.getParent();
-			}
-			SerializableFeaturesListView list = (SerializableFeaturesListView) parentList;
-			list.removeFeatureFromList(this);
-		}
-	}
+    @Override
+    public void onClick(View v) {
+        if (v == deleteButton) {
+            ViewParent parentList = getParent();
+            while (!(parentList instanceof SerializableFeaturesListView)) {
+                parentList = parentList.getParent();
+            }
+            SerializableFeaturesListView list = (SerializableFeaturesListView) parentList;
+            list.removeFeatureFromList(this);
+        }
+    }
 }

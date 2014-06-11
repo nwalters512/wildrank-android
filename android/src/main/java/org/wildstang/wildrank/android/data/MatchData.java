@@ -2,24 +2,24 @@ package org.wildstang.wildrank.android.data;
 
 public class MatchData extends DataFile {
 
-	int matchNumber;
-	int teamNumber;
+    int matchNumber;
+    int teamNumber;
 
-	public MatchData() {
-		super(DataFile.Type.MATCH);
-	}
+    public MatchData() {
+        super(DataFile.Type.MATCH);
+    }
 
-	public void setMatchNumber(int matchNumber) {
-		this.matchNumber = matchNumber;
-	}
+    public void setMatchNumber(int matchNumber) {
+        this.matchNumber = matchNumber;
+    }
 
-	public void setTeamNumber(int teamNumber) {
-		this.teamNumber = teamNumber;
-	}
+    public void setTeamNumber(int teamNumber) {
+        this.teamNumber = teamNumber;
+    }
 
-	@Override
-	public String getRelativeFile() {
-		return new String("/matches/" + matchNumber + "/" + teamNumber + ".json");
-	}
+    @Override
+    public String getRelativeFile() {
+        return "/matches/" + matchNumber + "/" + teamNumber + ".json";
+    }
 
 }

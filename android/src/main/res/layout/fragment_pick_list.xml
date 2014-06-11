@@ -32,7 +32,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <com.terlici.dragndroplist.DragNDropListView
+    <org.wildstang.wildrank.android.dragndrop.DragNDropListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

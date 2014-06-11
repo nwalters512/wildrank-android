@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/team_picture"
@@ -38,13 +38,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/team_picture"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/notes_label"
@@ -58,7 +58,7 @@
                 android:id="@+id/team_notes_scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/notes_label" >
+                android:layout_below="@id/notes_label">
 
                 <TextView
                     android:id="@+id/team_notes"
@@ -68,19 +68,19 @@
                     android:textSize="20sp" />
             </ScrollView>
         </RelativeLayout>
-        
+
         <View
-        android:layout_width="3dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray" />
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/darker_gray" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/pit_label"
@@ -90,19 +90,11 @@
                 android:text="Pit Scouting"
                 android:textSize="30sp" />
 
-            <ScrollView
-                android:id="@+id/team_pit_scrollview"
+            <FrameLayout
+                android:id="@+id/pit_summary_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/pit_label" >
-
-                <TextView
-                    android:id="@+id/team_pit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="false"
-                    android:textSize="20sp" />
-            </ScrollView>
+                android:layout_below="@id/pit_label"/>
         </RelativeLayout>
     </LinearLayout>
 

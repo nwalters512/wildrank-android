@@ -7,29 +7,32 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.json.JSONObject;
 import org.wildstang.wildrank.android.R;
+import org.wildstang.wildrank.android.data.DataManager;
+import org.wildstang.wildrank.android.data.PitData;
 import org.wildstang.wildrank.android.database.DatabaseContentProvider;
 import org.wildstang.wildrank.android.database.DatabaseContract;
-import org.wildstang.wildrank.android.interfaces.IDataView;
-import org.wildstang.wildrank.android.interfaces.IDataViewHost;
-import org.wildstang.wildrank.android.tasks.TaskLoadTeamData;
+import org.wildstang.wildrank.android.interfaces.ITemplatedTextView;
 import org.wildstang.wildrank.android.utils.Keys;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TeamDataFragment extends Fragment implements IDataViewHost, LoaderCallbacks<Cursor> {
+public class PitSummaryFragment extends Fragment implements LoaderCallbacks<Cursor> {
 
     private int teamNumber;
-    private long teamID;
+    private long teamID = -1;
 
-    private List<JSONObject> data = new ArrayList<>();
+    public static PitSummaryFragment newInstance(long teamID) {
+        PitSummaryFragment fragment = new PitSummaryFragment();
+        Bundle args = new Bundle();
+        args.putLong(Keys.TEAM_ID, teamID);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,16 +42,23 @@ public class TeamDataFragment extends Fragment implements IDataViewHost, LoaderC
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_team_data, container, false);
+        return inflater.inflate(R.layout.fragment_pit_summary, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (teamID != -1) {
+            getLoaderManager().restartLoader(0, null, this);
+        }
+    }
+
+    public void setTeamID(long teamID) {
+        this.teamID = teamID;
         getLoaderManager().restartLoader(0, null, this);
     }
 
-    private void initializeViews(ViewGroup v) {
+    private void initializeViews(ViewGroup v, JSONObject json) {
         if (v == null) {
             v = (ViewGroup) getView();
             if (v == null) {
@@ -58,18 +68,12 @@ public class TeamDataFragment extends Fragment implements IDataViewHost, LoaderC
         int childCount = v.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View view = v.getChildAt(i);
-            if (view instanceof IDataView) {
-                ((IDataView) view).populateFromData(data);
+            if (view instanceof ITemplatedTextView) {
+                ((ITemplatedTextView) view).populateFromData(json);
             } else if (view instanceof ViewGroup) {
-                initializeViews((ViewGroup) view);
+                initializeViews((ViewGroup) view, json);
             }
         }
-    }
-
-    @Override
-    public void setData(List<JSONObject> data) {
-        this.data = data;
-        initializeViews(null);
     }
 
     @Override
@@ -81,12 +85,26 @@ public class TeamDataFragment extends Fragment implements IDataViewHost, LoaderC
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
         teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
-        ((TextView) getView().findViewById(R.id.team_number)).setText("Team " + teamNumber);
-        TaskLoadTeamData task = new TaskLoadTeamData();
-        task.setContext(getActivity());
-        task.setCallbacks(this);
-        task.execute(teamNumber);
         getLoaderManager().destroyLoader(0);
+
+        try {
+            // Load the pit scouting data
+            String jsonString = null;
+            PitData pitData = new PitData();
+            pitData.setTeamNumber(teamNumber);
+            if (DataManager.loadDataIfExists(pitData, getActivity(), DataManager.DIRECTORY_FIRST_FOUND)) {
+                jsonString = pitData.getContent();
+            }
+            if (jsonString != null) {
+                JSONObject json = new JSONObject(jsonString);
+                initializeViews((ViewGroup) getView(), json);
+            } else {
+                ((ViewGroup) getView()).removeAllViews();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("PitSummaryFragment", "Error loading pit data");
+        }
     }
 
     @Override

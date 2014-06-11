@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.wildstang.wildrank"
+    package="org.wildstang.wildrank.android"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -34,7 +34,6 @@
         <activity
             android:name="org.wildstang.wildrank.android.activities.ScoutMatchActivity"
             android:label="@string/activity_scout_match"
-            android:parentActivityName="org.wildstang.wildrank.android.activities.MainActivity"
             android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,7 +88,7 @@
         
         <provider
             android:name="org.wildstang.wildrank.android.database.DatabaseContentProvider"
-            android:authorities="org.wildstang.wildrank.database.DatabaseContentProvider"
+            android:authorities="org.wildstang.wildrank.android.database.DatabaseContentProvider"
             android:exported="false" >
         </provider>
         

@@ -38,7 +38,7 @@
                 custom:label="Average Points / Match" />
             
             <org.wildstang.wildrank.android.customviews.DataView
-                android:id="@+id/average_score"
+                android:id="@+id/average_score_with_fouls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:expression="6*AVERAGE(autonomous-scored_low) + 11*AVERAGE(autonomous-scored_hot_low) + 15*AVERAGE(autonomous-scored_high) + 20*AVERAGE(autonomous-scored_hot_high) + 5*AVERAGE(autonomous-move) + 1*AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high) + 10*AVERAGE(teleop-truss) + 10*AVERAGE(teleop-truss_catch_count) - 20*AVERAGE(post_match-foul_general) - 50*AVERAGE(post_match-foul_technical)"
@@ -87,7 +87,7 @@
                 custom:label="Average Missed" />
 
             <org.wildstang.wildrank.android.customviews.DataView
-                android:id="@+id/percent_made"
+                android:id="@+id/auto_percent_made"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:expression="(AVERAGE(autonomous-scored_low) + AVERAGE(autonomous-scored_hot_low) + AVERAGE(autonomous-scored_high) + AVERAGE(autonomous-scored_hot_high))/(AVERAGE(autonomous-scored_low) + AVERAGE(autonomous-scored_hot_low) + AVERAGE(autonomous-scored_high) + AVERAGE(autonomous-scored_hot_high) + AVERAGE(autonomous-missed))"
@@ -116,14 +116,14 @@
                 custom:label="Average Scored Low" />
 
             <org.wildstang.wildrank.android.customviews.DataView
-                android:id="@+id/missed"
+                android:id="@+id/auto_missed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:expression="AVERAGE(teleop-missed)"
                 custom:label="Average Missed" />
 
             <org.wildstang.wildrank.android.customviews.DataView
-                android:id="@+id/percent_made"
+                android:id="@+id/teleop_percent_made"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:expression="(AVERAGE(teleop-scored_low) + AVERAGE(teleop-scored_high))/(AVERAGE(teleop-scored_low) + AVERAGE(teleop-scored_high) + AVERAGE(teleop-missed))"
@@ -131,7 +131,7 @@
                 custom:label="Average % Made" />
 
             <org.wildstang.wildrank.android.customviews.DataView
-                android:id="@+id/missed"
+                android:id="@+id/teleop_missed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:expression="AVERAGE(teleop-assist_count)"

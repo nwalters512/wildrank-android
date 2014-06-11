@@ -18,48 +18,48 @@ import java.util.ArrayList;
  */
 public class TaskLoadTeamData extends AsyncTask<Integer, ProgressUpdateInfo, ArrayList<JSONObject>> {
 
-	private Context context;
-	private IDataViewHost callbacks;
+    private Context context;
+    private IDataViewHost callbacks;
 
-	public void setContext(Context c) {
-		context = c;
-	}
+    public void setContext(Context c) {
+        context = c;
+    }
 
-	public void setCallbacks(IDataViewHost callbacks) {
-		this.callbacks = callbacks;
-	}
+    public void setCallbacks(IDataViewHost callbacks) {
+        this.callbacks = callbacks;
+    }
 
-	@Override
-	protected ArrayList<JSONObject> doInBackground(Integer... params) {
-		ProgressUpdateInfo update = new ProgressUpdateInfo();
-		update.state = ProgressUpdaterState.IN_PROGRESS;
-		update.message = "Loading event details";
-		publishProgress(update);
+    @Override
+    protected ArrayList<JSONObject> doInBackground(Integer... params) {
+        ProgressUpdateInfo update = new ProgressUpdateInfo();
+        update.state = ProgressUpdaterState.IN_PROGRESS;
+        update.message = "Loading event details";
+        publishProgress(update);
 
-		int teamNumber = params[0];
+        int teamNumber = params[0];
 
-		ArrayList<MatchData> matches = DataManager.getAllMatchResultsForTeam(context, teamNumber);
-		Log.d("doInBackground", "matches list length: " + matches.size());
-		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
-		for (MatchData match : matches) {
-			try {
-				JSONObject matchJSON = new JSONObject(match.getContent());
-				JSONObject scoringJSON = matchJSON.getJSONObject("scoring");
-				jsonObjects.add(scoringJSON);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        ArrayList<MatchData> matches = DataManager.getAllMatchResultsForTeam(context, teamNumber);
+        Log.d("doInBackground", "matches list length: " + matches.size());
+        ArrayList<JSONObject> jsonObjects = new ArrayList<>();
+        for (MatchData match : matches) {
+            try {
+                JSONObject matchJSON = new JSONObject(match.getContent());
+                JSONObject scoringJSON = matchJSON.getJSONObject("scoring");
+                jsonObjects.add(scoringJSON);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-		update.state = ProgressUpdaterState.COMPLETE;
-		publishProgress(update);
-		return jsonObjects;
-	}
+        update.state = ProgressUpdaterState.COMPLETE;
+        publishProgress(update);
+        return jsonObjects;
+    }
 
-	@Override
-	protected void onPostExecute(ArrayList<JSONObject> result) {
-		super.onPostExecute(result);
-		callbacks.setData(result);
-	}
+    @Override
+    protected void onPostExecute(ArrayList<JSONObject> result) {
+        super.onPostExecute(result);
+        callbacks.setData(result);
+    }
 
 }

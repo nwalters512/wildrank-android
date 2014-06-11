@@ -19,8 +19,11 @@ package org.wildstang.wildrank.android.dragndrop;
 import android.widget.ListAdapter;
 
 public interface DragNDropAdapter extends ListAdapter, DragNDropListView.OnItemDragNDropListener {
-	public int getDragHandler();
-	public int getMoveToTopButton();
-	public int getMoveToButtomButton();
-	public void setListItemButtonClickListener(ListViewButtonListener listener);
+    public int getDragHandler();
+
+    public int getMoveToTopButton();
+
+    public int getMoveToButtomButton();
+
+    public void setListItemButtonClickListener(ListViewButtonListener listener);
 }

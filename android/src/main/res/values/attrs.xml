@@ -21,6 +21,11 @@
             <enum name="percentage" value="2"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="TemplatedTextView">
+        <attr name="text" format="string" />
+        <attr name="trueString" format="string" />
+        <attr name="falseString" format="string" />
+    </declare-styleable>
     <declare-styleable name="WhiteboardView"></declare-styleable>
 
 </resources>

@@ -9,6 +9,6 @@ import android.os.Bundle;
  */
 public interface IScoutingFragmentHost {
 
-	public Bundle getScoutingViewStateBundle();
+    public Bundle getScoutingViewStateBundle();
 
 }

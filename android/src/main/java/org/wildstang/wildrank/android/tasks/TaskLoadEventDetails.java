@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wildstang.wildrank.android.competitionmodels.CompetitionMatch;
 import org.wildstang.wildrank.android.data.DataManager;
 import org.wildstang.wildrank.android.database.DatabaseContentProvider;
 import org.wildstang.wildrank.android.database.DatabaseContract;
@@ -15,6 +14,7 @@ import org.wildstang.wildrank.android.tasks.TaskFragment.ProgressUpdateInfo;
 import org.wildstang.wildrank.android.tasks.TaskFragment.ProgressUpdateInfo.ProgressUpdaterState;
 import org.wildstang.wildrank.android.tasks.TaskFragment.TaskType;
 import org.wildstang.wildrank.android.utils.Keys;
+import org.wildstang.wildrank.android.utils.MatchUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -96,7 +96,7 @@ public class TaskLoadEventDetails extends GenericTaskWithContext {
                 }
                 cv = new ContentValues();
                 cv.put(DatabaseContract.Match.KEY, key);
-                cv.put(DatabaseContract.Match.NUMBER, CompetitionMatch.matchNumberFromMatchKey(key));
+                cv.put(DatabaseContract.Match.NUMBER, MatchUtils.matchNumberFromMatchKey(key));
                 cv.put(DatabaseContract.Match.RED_1, redAlliance[0]);
                 cv.put(DatabaseContract.Match.RED_2, redAlliance[1]);
                 cv.put(DatabaseContract.Match.RED_3, redAlliance[2]);

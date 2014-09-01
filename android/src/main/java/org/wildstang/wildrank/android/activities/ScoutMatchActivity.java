@@ -13,7 +13,6 @@ import android.widget.Toast;
 import org.json.JSONObject;
 import org.wildstang.wildrank.android.R;
 import org.wildstang.wildrank.android.adapters.ScoutingFragmentPagerAdapter;
-import org.wildstang.wildrank.android.competitionmodels.CompetitionMatch;
 import org.wildstang.wildrank.android.customviews.MatchDetailsView;
 import org.wildstang.wildrank.android.data.DataManager;
 import org.wildstang.wildrank.android.data.MatchData;
@@ -23,19 +22,20 @@ import org.wildstang.wildrank.android.fragments.PostMatchScoutingFragment;
 import org.wildstang.wildrank.android.fragments.TeleoperatedScoutingFragment;
 import org.wildstang.wildrank.android.utils.JSONBundleTools;
 import org.wildstang.wildrank.android.utils.Keys;
+import org.wildstang.wildrank.android.utils.MatchUtils;
 
 public class ScoutMatchActivity extends ScoutingActivity {
 
-    public enum ScoutingState {
-        STATE_AUTON,
-        STATE_TELEOP,
-        STATE_POST_MATCH
-    }
+    public static final String CURRENT_TAB = "current_tab";
+
+    public static final int TAB_AUTON = 0;
+    public static final int TAB_TELEOP = 1;
+    public static final int TAB_POST_MATCH = 2;
 
     private String matchKey;
     private int teamNumber;
     private String allianceColor;
-    private ScoutingState state;
+    private int currentTab;
 
     private AutonomousScoutingFragment autonFragment;
     private TeleoperatedScoutingFragment teleopFragment;
@@ -65,44 +65,17 @@ public class ScoutMatchActivity extends ScoutingActivity {
                 // corresponding tab.
                 getActionBar().setSelectedNavigationItem(position);
                 // Also note the current state
-                switch (position) {
-                    case 0:
-                        state = ScoutingState.STATE_AUTON;
-                        break;
-                    case 1:
-                        state = ScoutingState.STATE_TELEOP;
-                        break;
-                    case 2:
-                        state = ScoutingState.STATE_POST_MATCH;
-                        break;
-                    default:
-                        state = ScoutingState.STATE_AUTON;
-                        break;
-                }
+                currentTab = position;
             }
         });
 
         setupActionBar();
 
-        // Note our current state if we are being restored
-        String stateString = "null";
+        // Note our current tab if we are being restored
         if (savedInstanceState != null) {
-            stateString = savedInstanceState.getString("state", "null");
+            currentTab = savedInstanceState.getInt(CURRENT_TAB);
         } else {
-        }
-        switch (stateString) {
-            case "auton":
-                state = ScoutingState.STATE_AUTON;
-                break;
-            case "teleop":
-                state = ScoutingState.STATE_TELEOP;
-                break;
-            case "post_match":
-                state = ScoutingState.STATE_POST_MATCH;
-                break;
-            default:
-                state = ScoutingState.STATE_AUTON;
-                break;
+            currentTab = TAB_AUTON;
         }
 
         // Get match key and team number extras from the intent
@@ -115,7 +88,7 @@ public class ScoutMatchActivity extends ScoutingActivity {
         }
 
         matchDetails = (MatchDetailsView) findViewById(R.id.match_details);
-        matchDetails.setMatchNumber(CompetitionMatch.matchNumberFromMatchKey(matchKey));
+        matchDetails.setMatchNumber(MatchUtils.matchNumberFromMatchKey(matchKey));
         matchDetails.setTeamNumber(teamNumber);
         matchDetails.setAllianceColor(allianceColor);
         autonFragment = new AutonomousScoutingFragment();
@@ -124,7 +97,7 @@ public class ScoutMatchActivity extends ScoutingActivity {
         Bundle args = new Bundle();
         args.putInt(Keys.TEAM_NUMBER, teamNumber);
         postMatchFragment.setArguments(args);
-        this.switchToState(state);
+        this.setCurrentTab(currentTab);
     }
 
     private void setupActionBar() {
@@ -160,29 +133,15 @@ public class ScoutMatchActivity extends ScoutingActivity {
 
     }
 
-    public void switchToState(ScoutingState state) {
-        this.state = state;
-        if (state == ScoutingState.STATE_AUTON) {
-            pager.setCurrentItem(0);
-        } else if (state == ScoutingState.STATE_TELEOP) {
-            pager.setCurrentItem(1);
-        } else if (state == ScoutingState.STATE_POST_MATCH) {
-            pager.setCurrentItem(2);
-        }
+    public void setCurrentTab(int tab) {
+        this.currentTab = tab;
+        pager.setCurrentItem(tab);
     }
 
     @Override
     public void onSaveInstanceState(Bundle b) {
         super.onSaveInstanceState(b);
-        String stateString;
-        if (state == ScoutingState.STATE_AUTON) {
-            stateString = "auton";
-        } else if (state == ScoutingState.STATE_TELEOP) {
-            stateString = "teleop";
-        } else {
-            stateString = "post_match";
-        }
-        b.putString("state", stateString);
+        b.putInt(CURRENT_TAB, currentTab);
     }
 
     public void scoutingComplete() {
@@ -204,7 +163,7 @@ public class ScoutMatchActivity extends ScoutingActivity {
         JSONObject scoringJson = JSONBundleTools.writeBundleToJSONObject(hierarchialBundle);
         JSONObject completeJson = new JSONObject();
         try {
-            completeJson.put("match_number", CompetitionMatch.matchNumberFromMatchKey(matchKey));
+            completeJson.put("match_number", MatchUtils.matchNumberFromMatchKey(matchKey));
             completeJson.put("team_number", teamNumber);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String scouterName = prefs.getString(Keys.SCOUTER_NAME, null);
@@ -218,7 +177,7 @@ public class ScoutMatchActivity extends ScoutingActivity {
 
         try {
             MatchData data = new MatchData();
-            data.setMatchNumber(CompetitionMatch.matchNumberFromMatchKey(matchKey));
+            data.setMatchNumber(MatchUtils.matchNumberFromMatchKey(matchKey));
             data.setTeamNumber(teamNumber);
             data.setContent(completeJson.toString(4));
             DataManager.getInstance().saveChangedFile(this, data);

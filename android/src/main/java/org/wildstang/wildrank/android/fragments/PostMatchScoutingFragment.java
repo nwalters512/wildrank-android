@@ -18,7 +18,7 @@ public class PostMatchScoutingFragment extends ScoutingFragment implements OnCli
     private int teamNumber;
 
     public PostMatchScoutingFragment() {
-        super("post_match");
+        super();
     }
 
     @Override

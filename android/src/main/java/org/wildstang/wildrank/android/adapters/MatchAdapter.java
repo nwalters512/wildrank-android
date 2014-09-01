@@ -11,10 +11,10 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import org.wildstang.wildrank.android.R;
-import org.wildstang.wildrank.android.competitionmodels.CompetitionMatch;
 import org.wildstang.wildrank.android.data.DataManager;
 import org.wildstang.wildrank.android.database.DatabaseContract;
 import org.wildstang.wildrank.android.utils.Keys;
+import org.wildstang.wildrank.android.utils.MatchUtils;
 
 public class MatchAdapter extends CursorAdapter {
 
@@ -27,7 +27,7 @@ public class MatchAdapter extends CursorAdapter {
         TextView number = (TextView) view.findViewById(R.id.number);
         TextView blueAlliance = (TextView) view.findViewById(R.id.blue_alliance);
         TextView redAlliance = (TextView) view.findViewById(R.id.red_alliance);
-        int matchNumber = CompetitionMatch.matchNumberFromMatchKey(cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.KEY)));
+        int matchNumber = MatchUtils.matchNumberFromMatchKey(cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.KEY)));
         number.setText("" + matchNumber);
         number.setFocusable(false);
         String blueAllianceString = cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.BLUE_1)) + "  " + cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.BLUE_2)) + "  "

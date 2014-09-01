@@ -37,7 +37,6 @@ public class NoteActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        // Show the Up button in the action bar.
         setupActionBar();
 
         // Keep the screen on while we are scouting
@@ -50,7 +49,7 @@ public class NoteActivity extends Activity implements OnClickListener {
         teamID = i.getLongExtra(Keys.TEAM_ID, -1);
 
         if (teamName == null || teamNumber == -1 || teamID == -1) {
-            throw new IllegalArgumentException("ScoutPitActivity must be created with a valid match key, team ID, and team number");
+            throw new IllegalArgumentException("NoteFragment must be created with a valid team name, team ID, and team number");
         }
 
         // Create the notes fragment

@@ -16,20 +16,11 @@ import org.wildstang.wildrank.android.interfaces.IScoutingFragmentHost;
 
 public abstract class ScoutingFragment extends Fragment {
 
-    private String name;
     private boolean isComplete = true;
     private boolean shouldHighlightIncomplete = false;
 
-    public ScoutingFragment(String name) {
-        if (name != null) {
-            this.name = name;
-        } else {
-            throw new IllegalArgumentException("ScoutingFragments must be created with a valid name");
-        }
-    }
-
-    public String getName() {
-        return name;
+    public ScoutingFragment() {
+        // Empty constructor
     }
 
     public boolean isComplete() {
@@ -91,6 +82,11 @@ public abstract class ScoutingFragment extends Fragment {
         }
     }
 
+    /**
+     * Populates a bundle with the data from all the IJSONSerializable views in the V=given ViewGroup.
+     * @param b the bundle to be populated
+     * @param vg the ViewGroup to write to the bundle
+     */
     public void writeContentsToBundle(Bundle b, ViewGroup vg) {
         int childCount = vg.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -103,6 +99,13 @@ public abstract class ScoutingFragment extends Fragment {
         }
     }
 
+    /**
+     * Iterates through the view hierarchy and uses a bundle to set the value of IJSONSerializable views.
+     * This is useful if you want to persist the views' states across configuration changes and need to restore
+     * them after the configuration change is complete.
+     * @param b the bundle to get values from
+     * @param v the ViewGroup to iterate through
+     */
     public void restoreViewsFromBundle(Bundle b, ViewGroup v) {
         int childCount = v.getChildCount();
         for (int i = 0; i < childCount; i++) {

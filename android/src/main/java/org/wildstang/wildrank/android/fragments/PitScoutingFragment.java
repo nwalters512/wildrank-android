@@ -24,7 +24,7 @@ public class PitScoutingFragment extends ScoutingFragment implements OnClickList
     int teamNumber;
 
     public PitScoutingFragment() {
-        super("Pit Scouting");
+        super();
     }
 
     @Override

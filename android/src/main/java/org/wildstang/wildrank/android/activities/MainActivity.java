@@ -52,6 +52,9 @@ import org.wildstang.wildrank.android.utils.Keys;
 
 public class MainActivity extends Activity implements TaskFragment.TaskCallbacks, OnItemClickListener, OnSharedPreferenceChangeListener {
 
+    private static final String SYNCHRONIZE_WITH_USB_TASK = "sync_with_usb";
+    private static final String MAIN_FRAGMENT = "main_fragment";
+
     private TaskFragmentSynchronizeWithFlashDrive synchronizeWithUSBTaskFragment;
     private ProgressDialog progress;
 
@@ -72,6 +75,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
     private int notesNavSpinnerMatch = 0;
     private int summariesNavSpinnerMode = 0;
     private int summariesNavSpinnerMatch = 0;
+    private int currentTabletMode = 0;
 
     boolean superUserMode = false;
 
@@ -105,7 +109,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
         // See if any fragments were retained across an orientation change
         FragmentManager fm = getFragmentManager();
-        synchronizeWithUSBTaskFragment = (TaskFragmentSynchronizeWithFlashDrive) fm.findFragmentByTag("synchronizeWithUSB");
+        synchronizeWithUSBTaskFragment = (TaskFragmentSynchronizeWithFlashDrive) fm.findFragmentByTag(SYNCHRONIZE_WITH_USB_TASK);
 
 		/*
          * If any Fragment is non-null, then it is currently being retained
@@ -123,7 +127,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         }
     }
 
-    /*
+    /**
      * Dismisses any ProgressDialog that is currently showing
      */
     @Override
@@ -135,6 +139,9 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         }
     }
 
+    /**
+     * If the super user state changed while the activity was paused, handle that here.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -183,6 +190,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        // Update super user state
         if (key.equals(Keys.SUPER_USER_MODE)) {
             superUserMode = sharedPreferences.getBoolean(key, false);
         }
@@ -190,8 +198,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
     @Override
     public void onPreExecute(TaskType type) {
-        // TODO Auto-generated method stub
-
+        // Nothing to do here
     }
 
     @Override
@@ -210,7 +217,10 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
             progress.dismiss();
             progress = null;
         } else {
-            progress.show();
+            if (!progress.isShowing()) {
+                progress.show();
+            }
+            ;
         }
 
     }
@@ -264,33 +274,38 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         alertDialog.show();
     }
 
+    /**
+     * Removes any task fragment that is associated with the activity.
+     */
     private void resetFragments() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if (fm.findFragmentByTag("synchronizeWithUSB") != null) {
-            ft.remove(fm.findFragmentByTag("synchronizeWithUSB"));
+        if (fm.findFragmentByTag(SYNCHRONIZE_WITH_USB_TASK) != null) {
+            ft.remove(fm.findFragmentByTag(SYNCHRONIZE_WITH_USB_TASK));
         }
         ft.commit();
     }
 
-    /*
+    /**
      * Initializes a TaskFragment that synchronizes internal storage with the
      * flash drive. Used to load any previously collected scouting/match data
-     * from the flash drive after loading match and pit lists
+     * from the flash drive after loading match and pit lists.
      */
     private void synchronizeWithFlashDrive() {
         resetFragments();
         if (DataManager.isFlashDriveConnected(this)) {
             FragmentManager fm = getFragmentManager();
             synchronizeWithUSBTaskFragment = new TaskFragmentSynchronizeWithFlashDrive();
-            fm.beginTransaction().add(synchronizeWithUSBTaskFragment, "synchronizeWithUSB").commit();
+            fm.beginTransaction().add(synchronizeWithUSBTaskFragment, SYNCHRONIZE_WITH_USB_TASK).commit();
         } else {
             displayFlashDriveWarning();
         }
 
     }
 
-	/* Navigation Drawer stuff */
+    /**
+     * Creates and sets up the navigation drawer.
+     */
 
     private void initializeNavigationDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -345,6 +360,9 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         getActionBar().setHomeButtonEnabled(true);
     }
 
+    /**
+     * Initializes super user mode. This simply hides the password protection fragment in the nav drawer.
+     */
     private void enableSuperUserMode() {
         superUserMode = true;
         if (drawerPassword != null) {
@@ -355,6 +373,9 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         }
     }
 
+    /**
+     * Disables super user mode. This simply shows the password protection fragment in the nav drawer.
+     */
     private void disableSuperUserMode() {
         superUserMode = false;
         if (drawerPassword != null) {
@@ -365,60 +386,83 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         }
     }
 
+    /**
+     * Called when the user clicks on an item in the nav drawer.
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = null;
-        int tabletMode = -1;
+        switchToMode(getModeForNavDrawerPosition(position));
+        drawerLayout.closeDrawer(findViewById(R.id.left_drawer));
+    }
+
+    /**
+     * Gets the integer representing the mode corresponding to a certain position in the nav drawer.
+     * @param position the position of the item in the nav drawer
+     * @return the integer representing that mode
+     */
+    private int getModeForNavDrawerPosition(int position) {
         switch (position) {
             case 0:
                 //Match scouting
-                fragment = new MatchScoutingMainFragment();
-                resetActionBar();
-                tabletMode = Keys.TABLET_MODE_MATCH;
-                break;
+                return Keys.TABLET_MODE_MATCH;
             case 1:
                 // Pit scouting
-                fragment = new PitScoutingMainFragment();
-                resetActionBar();
-                setupActionBarForPit();
-                tabletMode = Keys.TABLET_MODE_PIT;
-                break;
+                return Keys.TABLET_MODE_PIT;
             case 2:
                 // Notes
-                fragment = new NotesMainFragment();
-                resetActionBar();
-                setupActionBarForNotes();
-                tabletMode = Keys.TABLET_MODE_NOTES;
-                break;
+                return Keys.TABLET_MODE_NOTES;
             case 3:
                 // Team summaries
-                fragment = new TeamSummariesMainFragment();
-                resetActionBar();
-                setupActionBarForSummaries();
-                tabletMode = Keys.TABLET_MODE_TEAM_SUMMARIES;
-                break;
+                return Keys.TABLET_MODE_TEAM_SUMMARIES;
             case 4:
                 // Team summaries
+                return Keys.TABLET_MODE_WHITEBOARD;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Does everything necessary to switch to a new mode, including getting rid of the old fragment,
+     * creating the new fragment, and setting up the action bar.
+     *
+     * @param mode the desired mode from the Keys class, e.g. Keys.TABLET_MODE_MATCH
+     */
+    private void switchToMode(int mode) {
+        if (currentTabletMode == mode) {
+            // We are already in the appropriate mode. Do nothing.
+            return;
+        }
+        Fragment fragment;
+        resetActionBar();
+        switch (mode) {
+            case Keys.TABLET_MODE_MATCH:
+                fragment = new MatchScoutingMainFragment();
+                break;
+            case Keys.TABLET_MODE_PIT:
+                fragment = new PitScoutingMainFragment();
+                setupActionBarForPit();
+                break;
+            case Keys.TABLET_MODE_NOTES:
+                fragment = new NotesMainFragment();
+                setupActionBarForNotes();
+                break;
+            case Keys.TABLET_MODE_TEAM_SUMMARIES:
+                fragment = new TeamSummariesMainFragment();
+                setupActionBarForSummaries();
+                break;
+            case Keys.TABLET_MODE_WHITEBOARD:
                 fragment = new WhiteboardFragment();
-                resetActionBar();
-                tabletMode = Keys.TABLET_MODE_WHITEBOARD;
+                break;
+            default:
+                fragment = new MatchScoutingMainFragment();
                 break;
         }
-
-        if (tabletMode != -1) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(Keys.TABLET_MODE, tabletMode).commit();
-        }
-
-        if (fragment != null) {
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
-            setTitle(modeNames[position]);
-            drawerList.setItemChecked(position, true);
-
-        }
-        drawerLayout.closeDrawer(findViewById(R.id.left_drawer));
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
+        setTitle(modeNames[currentTabletMode - 1]);
+        drawerList.setItemChecked(currentTabletMode - 1, true);
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(Keys.TABLET_MODE, mode).commit();
     }
 
     private void setupActionBarForPit() {
@@ -432,7 +476,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
             @Override
             public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-                ((PitScoutingMainFragment) getFragmentManager().findFragmentByTag("mainFragment")).onNavigationItemSelected(itemPosition, itemId);
+                ((PitScoutingMainFragment) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT)).onNavigationItemSelected(itemPosition, itemId);
                 pitNavSpinnerPosition = itemPosition;
                 return true;
             }
@@ -465,7 +509,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                // Do nothing
 
             }
         });
@@ -473,7 +517,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
         // Set up spinner for match number
         // Get number of matches
-        String eventKey = PreferenceManager.getDefaultSharedPreferences(this).getString(Keys.CONFIGURED_EVENT, "null");
+        String eventKey = PreferenceManager.getDefaultSharedPreferences(this).getString(Keys.CONFIGURED_EVENT, null);
         Cursor countCursor = getContentResolver().query(Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "event/" + eventKey + "/match"), new String[]{"count(*) AS count"}, null, null,
                 null);
         countCursor.moveToFirst();
@@ -507,11 +551,11 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         switch (spinnerPosition) {
             case 0:
                 matchNumber.setVisibility(View.INVISIBLE);
-                if (!(getFragmentManager().findFragmentByTag("mainFragment") instanceof NotesMainFragment)) {
+                if (!(getFragmentManager().findFragmentByTag(MAIN_FRAGMENT) instanceof NotesMainFragment)) {
                     Fragment fragment = new NotesMainFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
+                    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
                 }
-                ((NotesMainFragment) getFragmentManager().findFragmentByTag("mainFragment")).setMode(NotesMainFragment.MODE_ALL).update();
+                ((NotesMainFragment) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT)).setMode(NotesMainFragment.MODE_ALL).update();
                 break;
             case 1:
                 matchNumber.setVisibility(View.VISIBLE);
@@ -525,15 +569,15 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
             return;
         }
         int matchNumber = spinnerPosition + 1;
-        if (!(getFragmentManager().findFragmentByTag("mainFragment") instanceof NotesMainFragment)) {
+        if (!(getFragmentManager().findFragmentByTag(MAIN_FRAGMENT) instanceof NotesMainFragment)) {
             Fragment fragment = new NotesMainFragment();
             Bundle args = new Bundle();
             args.putInt(NotesMainFragment.NOTES_MODE, NotesMainFragment.MODE_CURRENT_MATCH);
             args.putInt(NotesMainFragment.MATCH_NUMBER, matchNumber);
             fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
         } else {
-            ((NotesMainFragment) getFragmentManager().findFragmentByTag("mainFragment")).setMode(NotesMainFragment.MODE_CURRENT_MATCH).setMatchNumber(matchNumber).update();
+            ((NotesMainFragment) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT)).setMode(NotesMainFragment.MODE_CURRENT_MATCH).setMatchNumber(matchNumber).update();
         }
     }
 
@@ -561,7 +605,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                // Do nothing
 
             }
         });
@@ -591,7 +635,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                // Do nothing
             }
         });
         matchNumber.setSelection(summariesNavSpinnerMatch);
@@ -603,11 +647,11 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         switch (spinnerPosition) {
             case 0:
                 matchNumber.setVisibility(View.INVISIBLE);
-                if (!(getFragmentManager().findFragmentByTag("mainFragment") instanceof TeamSummariesMainFragment)) {
+                if (!(getFragmentManager().findFragmentByTag(MAIN_FRAGMENT) instanceof TeamSummariesMainFragment)) {
                     Fragment fragment = new TeamSummariesMainFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
+                    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
                 }
-                ((TeamSummariesMainFragment) getFragmentManager().findFragmentByTag("mainFragment")).setMode(TeamSummariesMainFragment.MODE_ALL).update();
+                ((TeamSummariesMainFragment) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT)).setMode(TeamSummariesMainFragment.MODE_ALL).update();
                 break;
             case 1:
                 Log.d("summariesModeSelected", "should be visible");
@@ -622,15 +666,15 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
             return;
         }
         int matchNumber = spinnerPosition + 1;
-        if (!(getFragmentManager().findFragmentByTag("mainFragment") instanceof TeamSummariesMainFragment)) {
+        if (!(getFragmentManager().findFragmentByTag(MAIN_FRAGMENT) instanceof TeamSummariesMainFragment)) {
             Fragment fragment = new TeamSummariesMainFragment();
             Bundle args = new Bundle();
             args.putInt(TeamSummariesMainFragment.SUMMARIES_MODE, TeamSummariesMainFragment.MODE_CURRENT_MATCH);
             args.putInt(TeamSummariesMainFragment.MATCH_NUMBER, matchNumber);
             fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
         } else {
-            ((TeamSummariesMainFragment) getFragmentManager().findFragmentByTag("mainFragment")).setMode(TeamSummariesMainFragment.MODE_CURRENT_MATCH).setMatchNumber(matchNumber).update();
+            ((TeamSummariesMainFragment) getFragmentManager().findFragmentByTag(MAIN_FRAGMENT)).setMode(TeamSummariesMainFragment.MODE_CURRENT_MATCH).setMatchNumber(matchNumber).update();
         }
     }
 
@@ -675,7 +719,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
                 this.finish();
             }
         } else if (requestCode == MatchScoutingMainFragment.MATCH_SCOUTING_FINISHED && resultCode == MatchScoutingMainFragment.MATCH_SCOUTING_SUCCESSFUL) {
-            Fragment fragment = getFragmentManager().findFragmentByTag("mainFragment");
+            Fragment fragment = getFragmentManager().findFragmentByTag(MAIN_FRAGMENT);
             if (fragment != null && fragment instanceof MatchScoutingMainFragment) {
                 ((MatchScoutingMainFragment) fragment).advanceToNextMatch();
             }
@@ -683,40 +727,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
     }
 
     private void loadConfiguredModeFragment() {
-        int tabletMode = PreferenceManager.getDefaultSharedPreferences(this).getInt(Keys.TABLET_MODE, Keys.TABLET_MODE_MATCH);
-        Fragment fragment;
-        switch (tabletMode) {
-            case Keys.TABLET_MODE_MATCH:
-                fragment = new MatchScoutingMainFragment();
-                resetActionBar();
-                break;
-            case Keys.TABLET_MODE_PIT:
-                fragment = new PitScoutingMainFragment();
-                resetActionBar();
-                setupActionBarForPit();
-                break;
-            case Keys.TABLET_MODE_NOTES:
-                fragment = new NotesMainFragment();
-                resetActionBar();
-                setupActionBarForNotes();
-                break;
-            case Keys.TABLET_MODE_TEAM_SUMMARIES:
-                fragment = new TeamSummariesMainFragment();
-                resetActionBar();
-                setupActionBarForSummaries();
-                break;
-            case Keys.TABLET_MODE_WHITEBOARD:
-                fragment = new WhiteboardFragment();
-                resetActionBar();
-                break;
-            default:
-                fragment = new MatchScoutingMainFragment();
-                resetActionBar();
-                break;
-        }
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, "mainFragment").commit();
-        setTitle(modeNames[tabletMode - 1]);
-        drawerList.setItemChecked(tabletMode - 1, true);
+        currentTabletMode = PreferenceManager.getDefaultSharedPreferences(this).getInt(Keys.TABLET_MODE, Keys.TABLET_MODE_MATCH);
+        switchToMode(currentTabletMode);
     }
 }

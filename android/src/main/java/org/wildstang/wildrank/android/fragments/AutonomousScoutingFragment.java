@@ -11,7 +11,7 @@ import org.wildstang.wildrank.android.interfaces.IScoutingFragmentHost;
 public class AutonomousScoutingFragment extends ScoutingFragment {
 
     public AutonomousScoutingFragment() {
-        super("autonomous");
+        super();
     }
 
     @Override

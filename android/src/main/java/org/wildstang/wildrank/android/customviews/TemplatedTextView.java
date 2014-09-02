@@ -91,10 +91,10 @@ public class TemplatedTextView extends TextView implements ITemplatedTextView {
      * For instance, take the following JSON object:
      * <p/>
      * {
-     * "foo":{
-     * "bar":"foo"
-     * "bar2":"foo2"
-     * }
+     *     "foo": {
+     *         "bar":"foo"
+     *         "bar2":"foo2"
+     *     }
      * }
      * <p/>
      * To get the value of "bar", you would provide the key string "foo-bar".

@@ -11,7 +11,7 @@ import org.wildstang.wildrank.android.interfaces.IScoutingFragmentHost;
 public class TeleoperatedScoutingFragment extends ScoutingFragment {
 
     public TeleoperatedScoutingFragment() {
-        super("teleop");
+        super();
     }
 
     @Override

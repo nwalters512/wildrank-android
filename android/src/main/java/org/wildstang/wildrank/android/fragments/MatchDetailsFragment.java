@@ -24,13 +24,13 @@ import android.widget.TextView;
 
 import org.wildstang.wildrank.android.R;
 import org.wildstang.wildrank.android.activities.ScoutMatchActivity;
-import org.wildstang.wildrank.android.competitionmodels.CompetitionMatch;
 import org.wildstang.wildrank.android.data.DataManager;
 import org.wildstang.wildrank.android.data.TeamPictureData;
 import org.wildstang.wildrank.android.database.DatabaseContentProvider;
 import org.wildstang.wildrank.android.database.DatabaseContract;
 import org.wildstang.wildrank.android.utils.ImageTools;
 import org.wildstang.wildrank.android.utils.Keys;
+import org.wildstang.wildrank.android.utils.MatchUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -103,7 +103,7 @@ public class MatchDetailsFragment extends Fragment implements LoaderManager.Load
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
         matchNumberView = (TextView) getView().findViewById(R.id.match_number);
-        matchNumberView.setText("" + CompetitionMatch.matchNumberFromMatchKey(matchKey));
+        matchNumberView.setText("" + MatchUtils.matchNumberFromMatchKey(matchKey));
         HashMap<String, String> teamNumberStrings = new HashMap<>();
 
         teamNumberStrings.put("red_1", cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.RED_1)));
@@ -126,7 +126,7 @@ public class MatchDetailsFragment extends Fragment implements LoaderManager.Load
         }
         teamNumberStrings.remove(configuredTeamString);
 
-        int matchNumber = CompetitionMatch.matchNumberFromMatchKey(matchKey);
+        int matchNumber = MatchUtils.matchNumberFromMatchKey(matchKey);
         if (DataManager.isMatchScouted(getActivity(), matchNumber, teamNumber)) {
             ((Button) getView().findViewById(R.id.button_begin_scouting)).setText(R.string.button_rescout_match);
             rescouting = true;
@@ -159,7 +159,7 @@ public class MatchDetailsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button_begin_scouting) {
-            if (rescouting == false) {
+            if (!rescouting) {
                 promptForScouterName();
             } else {
                 displayRescoutWarning();

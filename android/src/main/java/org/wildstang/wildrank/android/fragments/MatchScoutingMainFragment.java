@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import org.wildstang.wildrank.android.R;
-import org.wildstang.wildrank.android.database.DatabaseContract;
 import org.wildstang.wildrank.android.interfaces.IListFragmentCallbacks;
 import org.wildstang.wildrank.android.utils.Keys;
 
@@ -75,7 +74,7 @@ public class MatchScoutingMainFragment extends Fragment implements IListFragment
             FragmentManager fm = getFragmentManager();
             ViewQueryResultsInListFragment f = (ViewQueryResultsInListFragment) fm.findFragmentByTag(fragmentTag);
             Cursor c = (Cursor) f.getListAdapter().getItem(position);
-            String matchKey = c.getString(c.getColumnIndex(DatabaseContract.Match.KEY));
+            String matchKey = "placeholder";//c.getString(c.getColumnIndex(DatabaseContract.Match.KEY));
             MatchDetailsFragment mf = new MatchDetailsFragment();
             Bundle args = new Bundle();
             args.putString("matchKey", matchKey);

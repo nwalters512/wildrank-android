@@ -80,7 +80,7 @@ public class TeamDataFragment extends Fragment implements IDataViewHost, LoaderC
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
-        teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
+        //teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
         ((TextView) getView().findViewById(R.id.team_number)).setText("Team " + teamNumber);
         TaskLoadTeamData task = new TaskLoadTeamData();
         task.setContext(getActivity());

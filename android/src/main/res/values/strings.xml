@@ -57,21 +57,17 @@
         <item>blue_2</item>
         <item>blue_3</item>
     </string-array>
-    
+
     <string name="preference_pit_group_title">Set pit group</string>
     <string name="preference_pit_group_summary">Set which group of teams this tablet will scout in the pits</string>
     <string name="preference_pit_group_dialog_title">Select a group</string>
-
     <string name="preference_scouter_name_title">Set scouter name</string>
     <string name="preference_scouter_name_summary">Set the name that will be recorded with this scouting data</string>
     <string name="preference_scouter_name_dialog_title">Enter a name</string>
-    
     <string name="preference_superuser_title">Super User Mode</string>
     <string name="preference_superuser_summary">Super User Mode disables all password protection throughout the app</string>
-    
     <string name="preference_importpicklist_title">Import pick list</string>
     <string name="preference_importpicklist_summary">Imports pick list from the flash drive. Flash drive must be connected and file must be in /picklist/picklist.json</string>
-    
     <string name="preference_exportpicklist_title">Export pick list</string>
     <string name="preference_exportpicklist_summary">Exports pick list to the flash drive. Flash drive must be connected; file will be in /picklist/picklist.json</string>
 
@@ -89,13 +85,13 @@
         <item>Pneumatics</item>
     </string-array>
     <string-array name="frc_features">
-        <item></item>
+        <item/>
         <item>Shooter</item>
         <item>Catcher</item>
         <item>Accumulator</item>
     </string-array>
     <string-array name="frc_drivetrains">
-        <item></item>
+        <item/>
         <item>2-wheel drive</item>
         <item>4-wheel drive</item>
         <item>6-wheel drive</item>
@@ -115,7 +111,7 @@
         <item>Kicker</item>
     </string-array>
     <string-array name="frc_ranking">
-        <item></item>
+        <item/>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -127,5 +123,9 @@
     <!-- Navigation Drawer -->
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="title_activity_synchronization">SynchronizationActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_setup_flash_drive">SetupFlashDriveActivity</string>
 
 </resources>

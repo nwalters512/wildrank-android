@@ -100,14 +100,14 @@ public class ViewQueryResultsInListFragment extends ListFragment implements Load
                 return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "team"), DatabaseContract.Team.ALL_COLUMNS, null, null, DatabaseContract.Team.NUMBER);
             case MATCH_LIST:
                 return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "event/" + queryKey + "/match"), DatabaseContract.Match.ALL_COLUMNS, null, null,
-                        DatabaseContract.Match.NUMBER);
+                        DatabaseContract.Match.MATCH_NUMBER);
             case ASSIGNED_PIT_GROUP:
                 return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "pit"), DatabaseContract.Team.ALL_COLUMNS, null, null, DatabaseContract.Team.NUMBER);
             case TEAMS_FROM_MATCH_LIST:
-                String selection = DatabaseContract.Match.NUMBER + "=?";
+                String selection = DatabaseContract.Match.MATCH_NUMBER + "=?";
                 queryKey = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(Keys.CONFIGURED_EVENT, "null");
                 return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "event/" + queryKey + "/match"), DatabaseContract.Match.ALL_COLUMNS, selection,
-                        new String[]{"" + matchNumber}, DatabaseContract.Match.NUMBER);
+                        new String[]{"" + matchNumber}, DatabaseContract.Match.MATCH_NUMBER);
             case LOAD_LIST_OF_TEAMS:
                 int[] teams = args.getIntArray(LIST_OF_TEAMS);
                 System.out.println("teamslist");

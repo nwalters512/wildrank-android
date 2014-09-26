@@ -19,10 +19,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import org.wildstang.wildrank.android.R;
-import org.wildstang.wildrank.android.adapters.PickListAdapter;
 import org.wildstang.wildrank.android.database.DatabaseContentProvider;
 import org.wildstang.wildrank.android.database.DatabaseContract;
-import org.wildstang.wildrank.android.database.DatabaseHelper;
 import org.wildstang.wildrank.android.dragndrop.DragNDropCursorAdapter;
 import org.wildstang.wildrank.android.dragndrop.DragNDropListView;
 import org.wildstang.wildrank.android.dragndrop.DragNDropListView.OnItemDragNDropListener;
@@ -45,7 +43,7 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listAdapter = new PickListAdapter(getActivity(), R.layout.list_item_draggable_team, null, new String[]{DatabaseContract.Team.NUMBER}, new int[]{R.id.number}, R.id.handler, R.id.top_button, R.id.bottom_button);
+        //listAdapter = new PickListAdapter(getActivity(), R.layout.list_item_draggable_team, null, new String[]{DatabaseContract.Team.NUMBER}, new int[]{R.id.number}, R.id.handler, R.id.top_button, R.id.bottom_button);
         listView.setDragNDropAdapter(listAdapter);
         listView.setOnItemDragNDropListener(this);
         listView.setOnItemLongClickListener(this);
@@ -57,7 +55,7 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "team"), DatabaseContract.Team.ALL_COLUMNS, null, null,
-                DatabaseContract.Team.PICK_LIST_RANKING + " ASC, " + DatabaseContract.Team.NUMBER + " ASC");
+                /*DatabaseContract.Team.PICK_LIST_RANKING*/ "placeholder" + " ASC, " + DatabaseContract.Team.NUMBER + " ASC");
     }
 
     @Override
@@ -68,7 +66,7 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
         c.moveToPosition(-1);
         while (c.moveToNext()) {
             int teamNum = c.getInt(c.getColumnIndex(DatabaseContract.Team.NUMBER));
-            int sortOrder = c.getInt(c.getColumnIndex(DatabaseContract.Team.PICK_LIST_RANKING));
+            int sortOrder = c.getInt(c.getColumnIndex("placeholder"));
             Log.d("onLoadFinished", "Team: " + teamNum + "; Sort order: " + sortOrder);
         }
     }
@@ -92,7 +90,7 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
         for (int i = 0; i < parent.getAdapter().getCount(); i++) {
             teams.put(parent.getAdapter().getItemId(i), i);
         }
-        new DatabaseHelper(getActivity()).updateTeamRankings(teams);
+        //new DatabaseHelper(getActivity()).getPickListTable().updateTeamRankings(teams);
         ((BaseAdapter) parent.getAdapter()).notifyDataSetChanged();
         hideSavingProgressBar();
     }
@@ -110,13 +108,13 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
         Log.d("PickListFragment", "long click at " + position);
         Cursor c = listAdapter.getCursor();
         c.moveToPosition(position);
-        int tier = c.getInt(c.getColumnIndex(DatabaseContract.Team.PICK_LIST_TIER));
+        int tier = c.getInt(c.getColumnIndex("placeholder"));
         tier++;
         if (tier > 5) {
             tier = 0;
         }
         ContentValues cv = new ContentValues();
-        cv.put(DatabaseContract.Team.PICK_LIST_TIER, tier);
+        cv.put("placeholder", tier);
         getActivity().getContentResolver().update(Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "team/" + id), cv, null, null);
         Log.d("longClick", "tier: " + tier);
         return true;
@@ -126,14 +124,14 @@ public class PickListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Cursor c = listAdapter.getCursor();
         c.moveToPosition(position);
-        int picked = c.getInt(c.getColumnIndex(DatabaseContract.Team.PICK_LIST_PICKED));
+        int picked = c.getInt(c.getColumnIndex("placeholder"));
         if (picked != 0) {
             picked = 0;
         } else {
             picked = 1;
         }
         ContentValues cv = new ContentValues();
-        cv.put(DatabaseContract.Team.PICK_LIST_PICKED, picked);
+        cv.put("placeholder", picked);
         getActivity().getContentResolver().update(Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "team/" + id), cv, null, null);
     }
 

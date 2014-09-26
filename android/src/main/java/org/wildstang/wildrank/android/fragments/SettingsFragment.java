@@ -99,8 +99,8 @@ public class SettingsFragment extends PreferenceFragment {
                 JSONObject team = new JSONObject();
                 try {
                     team.put("team_number", c.getString(c.getColumnIndex(DatabaseContract.Team.NUMBER)));
-                    team.put("team_rank", c.getString(c.getColumnIndex(DatabaseContract.Team.PICK_LIST_RANKING)));
-                    team.put("team_tier", c.getString(c.getColumnIndex(DatabaseContract.Team.PICK_LIST_TIER)));
+                    team.put("team_rank", c.getString(c.getColumnIndex("placeholder")));
+                    team.put("team_tier", c.getString(c.getColumnIndex("placeholder")));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -163,7 +163,7 @@ public class SettingsFragment extends PreferenceFragment {
                         DatabaseContract.Team.NUMBER);
                 c.moveToPosition(-1);
                 while (c.moveToNext()) {
-                    Long teamId = c.getLong(c.getColumnIndex(DatabaseContract.Team._ID));
+                    Long teamId = c.getLong(c.getColumnIndex("placeholder"));
                     Integer teamNum = c.getInt(c.getColumnIndex(DatabaseContract.Team.NUMBER));
                     teamMap.put(teamNum, teamId);
                 }
@@ -178,12 +178,12 @@ public class SettingsFragment extends PreferenceFragment {
                         // team is missing from local database, handle this later
                     }
                     ContentValues cv = new ContentValues();
-                    cv.put(DatabaseContract.Team.PICK_LIST_RANKING, currentTeam.getInt("team_rank"));
+                    cv.put("placeholder", currentTeam.getInt("team_rank"));
                     int teamTier = 0;
                     if (currentTeam.has("team_tier")) {
                         teamTier = currentTeam.getInt("team_tier");
                     }
-                    cv.put(DatabaseContract.Team.PICK_LIST_TIER, teamTier);
+                    cv.put("placeholder", teamTier);
                     valuesMap.put(teamId, cv);
                 }
 

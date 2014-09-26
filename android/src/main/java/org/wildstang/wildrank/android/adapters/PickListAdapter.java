@@ -26,10 +26,11 @@ public class PickListAdapter extends DragNDropCursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ((TextView) view.findViewById(R.id.ranking)).setText("" + (cursor.getPosition() + 1));
-        ((TextView) view.findViewById(R.id.number)).setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Team.NUMBER)));
+        ((TextView) view.findViewById(R.id.number)).setText(cursor.getString(cursor.getColumnIndex(DatabaseContract.Team.TEAM_KEY)));
         view.findViewById(R.id.number).setFocusable(false);
         view.setFocusable(false);
-        if (cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.PICK_LIST_PICKED)) == 0) {
+        if(true){
+        /*if (cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.PICK_LIST_PICKED)) == 0) {
             int tier = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.PICK_LIST_TIER));
             switch (tier) {
                 case 1:
@@ -50,7 +51,7 @@ public class PickListAdapter extends DragNDropCursorAdapter {
                 default:
                     view.setBackgroundColor(context.getResources().getColor(R.color.white));
                     break;
-            }
+            }*/
             ((TextView) view.findViewById(R.id.ranking)).setTextColor(context.getResources().getColor(R.color.black));
             ((TextView) view.findViewById(R.id.number)).setTextColor(context.getResources().getColor(R.color.black));
         } else {

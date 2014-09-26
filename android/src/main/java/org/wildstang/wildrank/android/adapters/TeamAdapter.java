@@ -28,7 +28,7 @@ public class TeamAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        int teamNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseContract.Team.NUMBER)));
+        int teamNumber = 1;//Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseContract.Team.NUMBER)));
         TextView number = (TextView) view.findViewById(R.id.number);
         number.setText("" + teamNumber);
         TextView name = (TextView) view.findViewById(R.id.name);

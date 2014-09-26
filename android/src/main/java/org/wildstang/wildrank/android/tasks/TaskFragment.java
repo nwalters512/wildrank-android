@@ -31,7 +31,8 @@ public abstract class TaskFragment extends Fragment {
         TASK_LOAD_TEAM_LIST,
         TASK_LOAD_EVENT_DETAILS,
         TASK_SYNCHRONIZE_WITH_FLASH_DRIVE,
-        TASK_LOAD_TEAM_DATA
+        TASK_LOAD_TEAM_DATA,
+        TASK_SYNCHRONIZE_DATABASES
     }
 
     protected TaskCallbacks callbacks;

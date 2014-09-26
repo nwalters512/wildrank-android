@@ -28,25 +28,33 @@ public abstract class GenericTaskWithContext extends AsyncTask<Void, ProgressUpd
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        callbacks.onPreExecute(taskType);
+        if (callbacks != null) {
+            callbacks.onPreExecute(taskType);
+        }
     }
 
     @Override
     protected void onProgressUpdate(ProgressUpdateInfo... values) {
         super.onProgressUpdate(values);
-        callbacks.onProgressUpdate(taskType, values[0]);
+        if (callbacks != null) {
+            callbacks.onProgressUpdate(taskType, values[0]);
+        }
     }
 
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        callbacks.onPostExecute(taskType);
+        if (callbacks != null) {
+            callbacks.onPostExecute(taskType);
+        }
     }
 
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        callbacks.onCancelled(taskType);
+        if (callbacks != null) {
+            callbacks.onCancelled(taskType);
+        }
     }
 
 }

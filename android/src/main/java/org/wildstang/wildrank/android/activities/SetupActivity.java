@@ -15,8 +15,6 @@ import org.wildstang.wildrank.android.tasks.TaskFragment;
 import org.wildstang.wildrank.android.tasks.TaskFragment.ProgressUpdateInfo;
 import org.wildstang.wildrank.android.tasks.TaskFragment.ProgressUpdateInfo.ProgressUpdaterState;
 import org.wildstang.wildrank.android.tasks.TaskFragment.TaskType;
-import org.wildstang.wildrank.android.tasks.TaskFragmentLoadEventDetails;
-import org.wildstang.wildrank.android.tasks.TaskFragmentLoadTeamList;
 import org.wildstang.wildrank.android.tasks.TaskFragmentSynchronizeWithFlashDrive;
 
 import java.io.DataOutputStream;
@@ -28,9 +26,7 @@ public class SetupActivity extends Activity implements TaskFragment.TaskCallback
     public static final int RESULT_CODE_MOUNT = 34;
     public static final int RESULT_CODE_UNMOUNT = 45;
 
-    private TaskFragmentLoadEventDetails loadEventDetailsTaskFragment;
     private TaskFragmentSynchronizeWithFlashDrive synchronizeWithUSBTaskFragment;
-    private TaskFragmentLoadTeamList loadPitScoutingTeamsListTaskFragment;
     private ProgressDialog progress;
 
     @Override
@@ -138,8 +134,6 @@ public class SetupActivity extends Activity implements TaskFragment.TaskCallback
     private void loadTeamList() {
         resetFragments();
         FragmentManager fm = getFragmentManager();
-        loadPitScoutingTeamsListTaskFragment = new TaskFragmentLoadTeamList();
-        fm.beginTransaction().add(loadPitScoutingTeamsListTaskFragment, "loadTeamsFragment").commit();
     }
 
     /*
@@ -149,8 +143,6 @@ public class SetupActivity extends Activity implements TaskFragment.TaskCallback
     private void loadEventDetails() {
         resetFragments();
         FragmentManager fm = getFragmentManager();
-        loadEventDetailsTaskFragment = new TaskFragmentLoadEventDetails();
-        fm.beginTransaction().add(loadEventDetailsTaskFragment, "downloadMatchList").commit();
     }
 
     /*

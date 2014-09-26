@@ -1,0 +1,156 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.wildstang.wildrank.android.activities.SynchronizationActivity">
+
+    <LinearLayout
+        android:id="@+id/conflict_resolving"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_above="@+id/sync_progress">
+
+        <RelativeLayout
+            android:id="@+id/local_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/local_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Local Changes"
+                android:gravity="center" />
+
+            <View
+                android:id="@+id/local_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                android:layout_below="@id/local_title" />
+
+            <LinearLayout
+                android:id="@+id/local_requested_operation_group"
+                android:layout_below="@id/local_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/requested_local_operation_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Requested Operation: " />
+
+                <TextView
+                    android:id="@+id/requested_local_operation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="delete" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/local_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/local_requested_operation_group" />
+
+            <Button
+                android:id="@+id/accept_local_changes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Accept local changes" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/incoming_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/incoming_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Incoming Changes"
+                android:gravity="center" />
+
+            <View
+                android:id="@+id/incoming_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black"
+                android:layout_below="@id/incoming_title" />
+
+            <LinearLayout
+                android:id="@+id/incoming_requested_operation_group"
+                android:layout_below="@id/incoming_horizontal_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/requested_incoming_operation_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Requested Operation: " />
+
+                <TextView
+                    android:id="@+id/requested_incoming_operation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="delete" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/incoming_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/incoming_horizontal_divider" />
+
+            <Button
+                android:id="@+id/accept_incoming_changes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Accept incoming changes" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/sync_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Sync in progress..." />
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:indeterminate="true" />
+    </LinearLayout>
+
+</RelativeLayout>

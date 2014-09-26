@@ -3,9 +3,9 @@ package org.wildstang.wildrank.android.tasks;
 
 import android.app.Activity;
 
-public class TaskFragmentLoadTeamList extends TaskFragment {
+public class TaskFragmentSetUpFlashDrive extends TaskFragment {
 
-    private TaskLoadTeamList task;
+    private TaskSetUpFlashDrive task;
 
     /**
      * Hold a reference to the parent Activity so we can report the task's
@@ -20,10 +20,11 @@ public class TaskFragmentLoadTeamList extends TaskFragment {
         if (task != null) {
             task.registerProgressUpdater(callbacks);
         } else {
-            task = new TaskLoadTeamList();
+            task = new TaskSetUpFlashDrive();
             task.setContext(getActivity().getApplicationContext());
             task.registerProgressUpdater(callbacks);
             task.execute();
         }
     }
+
 }

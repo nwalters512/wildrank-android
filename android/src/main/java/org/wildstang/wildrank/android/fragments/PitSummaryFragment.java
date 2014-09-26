@@ -84,7 +84,7 @@ public class PitSummaryFragment extends Fragment implements LoaderCallbacks<Curs
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
-        teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
+        //teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
         getLoaderManager().destroyLoader(0);
 
         try {

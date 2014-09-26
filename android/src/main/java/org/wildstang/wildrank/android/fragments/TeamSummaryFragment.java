@@ -18,7 +18,6 @@ import org.wildstang.wildrank.android.R;
 import org.wildstang.wildrank.android.data.DataManager;
 import org.wildstang.wildrank.android.data.NotesData;
 import org.wildstang.wildrank.android.data.TeamPictureData;
-import org.wildstang.wildrank.android.database.DatabaseContentProvider;
 import org.wildstang.wildrank.android.database.DatabaseContract;
 import org.wildstang.wildrank.android.utils.ImageTools;
 import org.wildstang.wildrank.android.utils.Keys;
@@ -74,14 +73,14 @@ public class TeamSummaryFragment extends Fragment implements LoaderCallbacks<Cur
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.d("onCreateLoader", "loader crated with team id: " + teamID);
-        return new CursorLoader(getActivity(), Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "team/" + teamID), DatabaseContract.Team.ALL_COLUMNS, null, null, null);
+        return new CursorLoader(getActivity(), Uri.withAppendedPath(Uri.parse("DatabaseContentProvider.CONTENT_URI"), "team/" + teamID), DatabaseContract.Team.ALL_COLUMNS, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
-        Log.d("onLoadFinished", "loaded team id: " + cursor.getLong(cursor.getColumnIndex(DatabaseContract.Team._ID)));
-        teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
+        //Log.d("onLoadFinished", "loaded team id: " + cursor.getLong(cursor.getColumnIndex(DatabaseContract.Team._ID)));
+        //teamNumber = cursor.getInt(cursor.getColumnIndex(DatabaseContract.Team.NUMBER));
         teamName = cursor.getString(cursor.getColumnIndex(DatabaseContract.Team.NAME));
         teamNumberView = (TextView) getView().findViewById(R.id.team_number);
         teamNumberView.setText("" + teamNumber);

@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -35,7 +33,7 @@ import android.widget.Toast;
 
 import org.wildstang.wildrank.android.R;
 import org.wildstang.wildrank.android.data.DataManager;
-import org.wildstang.wildrank.android.database.DatabaseContentProvider;
+import org.wildstang.wildrank.android.database.DatabaseHelper;
 import org.wildstang.wildrank.android.fragments.MatchScoutingMainFragment;
 import org.wildstang.wildrank.android.fragments.NotesMainFragment;
 import org.wildstang.wildrank.android.fragments.PasswordProtectionFragment;
@@ -397,6 +395,7 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
 
     /**
      * Gets the integer representing the mode corresponding to a certain position in the nav drawer.
+     *
      * @param position the position of the item in the nav drawer
      * @return the integer representing that mode
      */
@@ -518,10 +517,9 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         // Set up spinner for match number
         // Get number of matches
         String eventKey = PreferenceManager.getDefaultSharedPreferences(this).getString(Keys.CONFIGURED_EVENT, null);
-        Cursor countCursor = getContentResolver().query(Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "event/" + eventKey + "/match"), new String[]{"count(*) AS count"}, null, null,
-                null);
-        countCursor.moveToFirst();
-        int count = countCursor.getInt(0);
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+        int count = db.getMatchesTable().getMatchesCount();
+        db.close();
         String[] matchNumberList = new String[count];
         // Construct list of match numbers
         for (int i = 0; i < matchNumberList.length; i++) {
@@ -614,10 +612,9 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         // Set up spinner for match number
         // Get number of matches
         String eventKey = PreferenceManager.getDefaultSharedPreferences(this).getString(Keys.CONFIGURED_EVENT, "null");
-        Cursor countCursor = getContentResolver().query(Uri.withAppendedPath(DatabaseContentProvider.CONTENT_URI, "event/" + eventKey + "/match"), new String[]{"count(*) AS count"}, null, null,
-                null);
-        countCursor.moveToFirst();
-        int count = countCursor.getInt(0);
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+        int count = db.getMatchesTable().getMatchesCount();
+        db.close();
         String[] matchNumberList = new String[count];
         // Construct list of match numbers
         for (int i = 0; i < matchNumberList.length; i++) {

@@ -27,7 +27,7 @@ public class MatchAdapter extends CursorAdapter {
         TextView number = (TextView) view.findViewById(R.id.number);
         TextView blueAlliance = (TextView) view.findViewById(R.id.blue_alliance);
         TextView redAlliance = (TextView) view.findViewById(R.id.red_alliance);
-        int matchNumber = MatchUtils.matchNumberFromMatchKey(cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.KEY)));
+        int matchNumber = MatchUtils.matchNumberFromMatchKey(cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.MATCH_KEY)));
         number.setText("" + matchNumber);
         number.setFocusable(false);
         String blueAllianceString = cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.BLUE_1)) + "  " + cursor.getString(cursor.getColumnIndex(DatabaseContract.Match.BLUE_2)) + "  "

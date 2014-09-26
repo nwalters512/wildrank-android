@@ -15,11 +15,12 @@
 
     <!-- Permission for root access, used for ejecting the flash drive -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
-    
+
     <!-- Permission for camera access, used for pit scouting pictures -->
     <uses-permission android:name="android.permission.CAMERA" />
- 	<uses-feature android:name="android.hardware.camera" />
- 	<uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -30,68 +31,69 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.ScoutMatchActivity"
+            android:name=".activities.ScoutMatchActivity"
             android:label="@string/activity_scout_match"
             android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.ScoutPitActivity"
+            android:name=".activities.ScoutPitActivity"
             android:label="@string/activity_scout_pit"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.wildstang.wildrank.activities.PitScoutingMainActivity" />
         </activity>
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/activity_settings"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MatchScoutingMainActivity" />
         </activity>
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.NoteActivity"
+            android:name=".activities.NoteActivity"
             android:label="@string/activity_notes"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.wildstang.wildrank.activities.NotesMainActivity" />
         </activity>
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/activity_launch"
             android:screenOrientation="landscape" >
+
+        </activity>
+        <activity
+            android:name=".activities.SetupActivity"
+            android:label="@string/activity_setup"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".activities.SynchronizationActivity"
+            android:label="@string/title_activity_synchronization" >
+        </activity>
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:label="@string/title_activity_welcome" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name="org.wildstang.wildrank.android.activities.SetupActivity"
-            android:label="@string/activity_setup"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="landscape" >
+            android:name=".activities.SetupFlashDriveActivity"
+            android:label="@string/title_activity_setup_flash_drive" >
         </activity>
-        
-        <provider
-            android:name="org.wildstang.wildrank.android.database.DatabaseContentProvider"
-            android:authorities="org.wildstang.wildrank.android.database.DatabaseContentProvider"
-            android:exported="false" >
-        </provider>
-        
     </application>
 
 </manifest>

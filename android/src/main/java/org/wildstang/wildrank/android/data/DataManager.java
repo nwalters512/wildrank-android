@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.apache.commons.io.FileUtils;
+import org.wildstang.wildrank.android.utils.Constants;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -290,7 +291,7 @@ public class DataManager {
             case DIRECTORY_FLASH_SYNCED:
                 return getFlashDriveSyncedDirectory();
             case DIRECTORY_FLASH_ROOT:
-                return new File("/storage/usbdisk0/");
+                return new File(Constants.USB_FLASH_DRIVE_ROOT_PATH);
             default:
                 Log.w("getDirectory", "getDirectory() must be called with a valid integer directory identifier!");
                 return new File("");
@@ -335,13 +336,13 @@ public class DataManager {
     }
 
     private static File getFlashDriveSyncedDirectory() {
-        File directory = new File("/storage/usbdisk0/synced/");
+        File directory = new File(Constants.USB_FLASH_DRIVE_ROOT_PATH + "/synced/");
         directory.mkdirs();
         return directory;
     }
 
     private static File getFlashDriveUnintegratedDirectory() {
-        File directory = new File("/storage/usbdisk0/unintegrated/");
+        File directory = new File(Constants.USB_FLASH_DRIVE_ROOT_PATH + "/unintegrated/");
         directory.mkdirs();
         return directory;
     }

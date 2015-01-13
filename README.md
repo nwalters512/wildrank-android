@@ -155,6 +155,8 @@ I would create a ```TemplatedTextView``` in my layout and add a ```text``` attri
  
 Note that the ```text``` attribute is parsed as HTML, so you can use basic HTML formatting in your text strings.
 
+The setup for the pit summary is done in the layout file ```fragment_pit_summary.xml```
+
 #### Configuring the data view
 Team Summary mode also provides basic data analysis, which is handled similarly to the pit summary. It uses ```DataView``` views with an ```expression``` attribute. It provides support for addition, subtraction, multiplication, and division, as well as an average function that will evaluate to the average of the specified field for all matches for the given team.
 
@@ -165,6 +167,8 @@ custom:expression="AVERAGE(teleop-scored_low) + 10*AVERAGE(teleop-scored_high)"
 ```
 
 This would evaluate to the average teleop low goals per match plus 10 times the average high goals per match, giving a very basic average score. Note that the key system is the same: a piece of data that was collected with the key ```teleop-scored_high``` is accessed via the same key.
+
+The setup for the data view is in the layout file ```fragment_team_data.xml```
  
 #Contributing
 Want to add features, fix bugs, or just poke around the code? No problem!

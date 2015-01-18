@@ -457,7 +457,6 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, MAIN_FRAGMENT).commit();
         setTitle(modeNames[currentTabletMode - 1]);
-        drawerList.setItemChecked(currentTabletMode - 1, true);
         PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(Keys.TABLET_MODE, mode).commit();
     }
 

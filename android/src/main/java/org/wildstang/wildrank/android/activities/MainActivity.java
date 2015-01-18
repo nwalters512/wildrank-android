@@ -429,10 +429,6 @@ public class MainActivity extends Activity implements TaskFragment.TaskCallbacks
      * @param mode the desired mode from the Keys class, e.g. Keys.TABLET_MODE_MATCH
      */
     private void switchToMode(int mode) {
-        if (currentTabletMode == mode) {
-            // We are already in the appropriate mode. Do nothing.
-            return;
-        }
         Fragment fragment;
         resetActionBar();
         switch (mode) {

@@ -1,9 +1,10 @@
 # WildRank - Android App
 
-
-[![Build Status](https://travis-ci.org/nwalters512/wildrank-android.png?branch=master)](https://travis-ci.org/nwalters512/wildrank-android)
-
 An Android app for scouting at FIRST Robotics Competition created by Team 111 WildStang.
+
+# \*Deprecated\*
+
+This version of WildRank is no longer supported. For the latest and greatest, please check out https://github.com/wildstang/wildrank-android instead!
 
 ##***Important note***
 Team 111 WildStang has only used this app with Motorola Xooms flashed with an AOSP 4.2.2 ROM. This will likely function on other devices, as long as those devices support USB OTG. The only thing likely to change between devices is the mount path of the flash drive. This is not a standardized android feature. To configure this for your specific setup, you should only have to change the functions ```DataManager.getDirectory(...)``` for case ```DIRECTORY_FLASH_ROOT```, ```DataManager.getFlashDriveSyncedDirectory()```, and ```DataManager.getFlashDriveUnintegratedDirectory()``` to return the correct location. We are working on making this selectable within the application so that you can deploy the same build to a variety of Android tablets.

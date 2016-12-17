@@ -54,7 +54,7 @@ public class PitScoutingMainFragment extends Fragment implements IListFragmentCa
         Bundle args = new Bundle();
         args.putInt(ViewQueryResultsInListFragment.QUERY_TYPE, ViewQueryResultsInListFragment.ALL_PIT_LIST);
         fragment.setArguments(args);
-        getFragmentManager().beginTransaction().add(R.id.list_container, fragment, "teamList").commitAllowingStateLoss();
+        getFragmentManager().beginTransaction().replace(R.id.list_container, fragment, "teamList").commitAllowingStateLoss();
     }
 
     @Override
